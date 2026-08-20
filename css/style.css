@@ -130,7 +130,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #contact>h2{font-family:'Isamanru',sans-serif; font-weight:700;}
 
 #home>.container>.home-hero-center{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center;}
-#home>.container>.home-hero-center>h1{font-family:'ShinDongYeopHandwriting',cursive; font-weight:700; font-size:190px; color:#8FAF9A; line-height:0.9; letter-spacing:-3px; text-align:center;}
+#home>.container>.home-hero-center>h1{font-family:'ShinDongYeopHandwriting',cursive; font-weight:700; font-size:190px; color:#74967E; line-height:0.9; letter-spacing:-3px; text-align:center;}
 #home>.container>.home-hero-center>.home-sprout{width:120px; height:auto; margin-top:10px;}
 
 /* section - aboutme */
