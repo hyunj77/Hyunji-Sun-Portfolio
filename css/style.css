@@ -342,9 +342,9 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #design{width:100%; height:auto; padding:60px 0 40px; box-sizing:border-box;}
   #design>h2{padding-top:0; font-size:36px; margin-bottom:16px;}
   #design>.container{zoom:0.36;}
-  #design>.prev,#design>.next{top:200px; margin-top:0;}
-  #design>.prev{left:10px;}
-  #design>.next{right:10px;}
+  #design>.prev,#design>.next{top:120px; margin-top:0; left:auto;}
+  #design>.prev{right:64px;}
+  #design>.next{right:20px;}
 
   /* Contact */
   #contact{height:auto; padding:60px 20px; box-sizing:border-box;}
