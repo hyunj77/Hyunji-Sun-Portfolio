@@ -3,6 +3,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
 
 @font-face {
+  font-family: 'SongamLeeHyeongSik';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.0/SongamIhyeongsik-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cafe24LovingU';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KccSonGigeong';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KCC-Sonkeechung.woff2') format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'NohHaeChan';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/ROEHOE-CHAN.woff') format('woff');
   font-weight: normal;
@@ -130,7 +151,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #contact>h2{font-family:'Isamanru',sans-serif; font-weight:700;}
 
 #home>.container>.home-hero-center{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center;}
-#home>.container>.home-hero-center>h1{font-family:'ShinDongYeopHandwriting',cursive; font-weight:700; font-size:190px; color:#74967E; line-height:0.9; letter-spacing:-3px; text-align:center;}
+#home>.container>.home-hero-center>h1{font-family:'SongamLeeHyeongSik',cursive; font-weight:700; font-size:190px; color:#74967E; line-height:0.9; letter-spacing:-3px; text-align:center;}
 #home>.container>.home-hero-center>.home-sprout{width:120px; height:auto; margin-top:10px;}
 
 /* section - aboutme */
