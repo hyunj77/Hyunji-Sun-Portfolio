@@ -311,4 +311,38 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #aboutme>.content1-right>.profile>ul>li{width:100%; padding-top:0;}
   #aboutme>.content1-right>.profile>.prev{top:0; right:44px; margin-right:0;}
   #aboutme>.content1-right>.profile>.next{top:0; right:0; margin-right:0;}
+
+  /* Home */
+  #home>.container{width:100%; padding:0 20px; box-sizing:border-box;}
+  #home>.container>p:nth-child(1){left:20px; font-size:12px;}
+  #home>.container>.home-hero-center>h1{font-size:70px;}
+  #home>.container>.home-hero-center>.home-sprout{width:60px;}
+  #home>.home-side{display:none;}
+
+  /* Skills */
+  #skills{width:100%; height:auto; padding:60px 20px; box-sizing:border-box;}
+  #skills>h2{font-size:36px;}
+  #skills>h2:first-child{padding-top:0;}
+  #skills>.tool-filter{width:100%; flex-wrap:wrap;}
+  #skills>.tool-filter>li{margin:4px 8px 4px 0;}
+  #skills>.tool{width:100%; gap:8px;}
+  #skills>.tool>li{width:76px; padding:10px 4px;}
+  #skills>.tool>li>.tool-icon{width:40px; height:40px; margin:0 auto 8px;}
+  #skills>.tool>li>.tool-name{font-size:11px;}
+
+  /* Project - 카드 2열, 미리보기 화면 낮게 */
+  #portfolio{width:100%; height:auto; padding:60px 20px; box-sizing:border-box;}
+  #portfolio>h2{padding-top:0; font-size:36px;}
+  #portfolio>.container>.project-grid{width:100%; gap:16px;}
+  #portfolio>.container>.project-grid>.project-card{width:calc(50% - 8px);}
+  #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{height:90px;}
+  #portfolio>.container>.project-grid>.project-card>.project-name{font-size:14px; margin-top:10px;}
+
+  /* Design - 구조/슬라이드 그대로, zoom으로 축소만 */
+  #design{width:100%; height:auto; padding:60px 0 40px; box-sizing:border-box;}
+  #design>h2{padding-top:0; font-size:36px; margin-bottom:16px;}
+  #design>.container{zoom:0.36;}
+  #design>.prev,#design>.next{top:200px; margin-top:0;}
+  #design>.prev{left:10px;}
+  #design>.next{right:10px;}
 }
