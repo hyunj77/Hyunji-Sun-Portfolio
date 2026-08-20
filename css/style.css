@@ -305,7 +305,7 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #aboutme>.content1-left>.about-photo-box{position:static; margin:0 auto 30px; display:block; width:60%; max-width:260px; animation:none; transform:none;}
   #aboutme>.content1-left>.about_bg{display:none;}
 
-  #aboutme>.content1-right{position:static; width:100%; margin:0;}
+  #aboutme>.content1-right{position:static; float:none; width:100%; margin:0;}
   #aboutme>.content1-right>.profile{position:relative; width:100%; padding-top:44px;}
   #aboutme>.content1-right>.profile>ul{width:100%;}
   #aboutme>.content1-right>.profile>ul>li{width:100%; padding-top:0;}
