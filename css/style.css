@@ -289,3 +289,78 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
 #toTop::before{content:''; display:block; margin:0 auto; width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:11px solid #8FAF9A; transition:border-color 0.3s;}
 #toTop:hover{background-color:#8FAF9A;}
 #toTop:hover::before{border-bottom-color:#fff;}
+
+/* 모바일 공통 레이아웃 (768px 이하) */
+@media (max-width:768px){
+  #wrap{min-width:0; zoom:100%;}
+
+  /* 헤더/네비 */
+  header{height:auto; padding:8px 0;}
+  header>.container>nav{position:static; width:100%; height:auto; margin:0;}
+  header>.container>nav>.gnb{display:flex; flex-wrap:wrap; justify-content:center;}
+  header>.container>nav>.gnb>li{float:none; width:auto; margin:2px 6px;}
+  header>.container>nav>.gnb>li>a{height:32px; line-height:32px; font-size:13px;}
+
+  /* Home */
+  #home>.container{width:100%; padding:0 20px; box-sizing:border-box;}
+  #home>.container>p:nth-child(1){left:20px; font-size:12px;}
+  #home>.container>.home-hero-center>h1{font-size:70px;}
+  #home>.container>.home-hero-center>.home-sprout{width:60px;}
+  #home>.home-side{display:none;}
+
+  /* About me (사원증 위, 텍스트 아래로 세로 배치) */
+  #aboutme{height:auto; padding:60px 20px 80px; box-sizing:border-box;}
+  #aboutme>.content1-left{float:none; width:100%; height:auto;}
+  #aboutme>.content1-left>h2{position:static; width:100%; margin:0 0 30px; font-size:40px;}
+  #aboutme>.content1-left>.about-photo-box{position:static; margin:0 auto 30px; display:block; width:60%; max-width:260px; animation:none; transform:none;}
+  #aboutme>.content1-left>.about_bg{display:none;}
+
+  #aboutme>.content1-right{position:static; width:100%; margin:0;}
+  #aboutme>.content1-right>.profile{width:100%;}
+  #aboutme>.content1-right>.profile>ul{width:100%;}
+  #aboutme>.content1-right>.profile>ul>li{width:100%; padding-top:20px;}
+  #aboutme>.content1-right>.profile>.prev{top:-10px; right:60px; margin-right:0;}
+  #aboutme>.content1-right>.profile>.next{top:-10px; right:20px; margin-right:0;}
+
+  /* Skills */
+  #skills{width:100%; height:auto; padding:60px 20px 60px; box-sizing:border-box;}
+  #skills>h2{font-size:36px;}
+  #skills>h2:first-child{padding-top:0;}
+  #skills>.tool-filter{width:100%; flex-wrap:wrap;}
+  #skills>.tool-filter>li{margin:4px 8px 4px 0;}
+  #skills>.tool{width:100%;}
+
+  /* Project */
+  #portfolio{width:100%; height:auto; padding:60px 20px 60px; box-sizing:border-box;}
+  #portfolio>h2{padding-top:0; font-size:36px;}
+  #portfolio>.container>.project-grid{width:100%; gap:24px;}
+  #portfolio>.container>.project-grid>.project-card{width:100%; max-width:320px;}
+  #portfolio>.portfolio_bg>.portfolio_img{left:50%; top:50%; margin:0; transform:translate(-50%,-50%); width:88%; max-width:380px;}
+
+  /* Design */
+  #design{width:100%; height:auto; padding:60px 20px 60px; box-sizing:border-box;}
+  #design>h2{padding-top:0; font-size:36px;}
+  #design>.container{width:100%; height:auto; overflow:visible;}
+  #design>.container>ul{position:static; width:100%; height:auto;}
+  #design>.container>ul>li{position:static; width:100%; height:auto; transform:none; margin-bottom:30px;}
+  #design>.container>ul>li>.web,
+  #design>.container>ul>li>.graphic{display:flex; flex-wrap:wrap; gap:8px;}
+  #design>.container>ul>li>.web>li:nth-child(1),
+  #design>.container>ul>li>.web>li:nth-child(2),
+  #design>.container>ul>li>.web>li:nth-child(3),
+  #design>.container>ul>li>.web>li:nth-child(4),
+  #design>.container>ul>li>.web>li:nth-child(5),
+  #design>.container>ul>li>.graphic>li:nth-child(1),
+  #design>.container>ul>li>.graphic>li:nth-child(2),
+  #design>.container>ul>li>.graphic>li:nth-child(3),
+  #design>.container>ul>li>.graphic>li:nth-child(4),
+  #design>.container>ul>li>.graphic>li:nth-child(5){width:calc(50% - 4px); height:140px; line-height:140px; margin:0; float:none;}
+  #design>.prev,#design>.next{display:none;}
+  #design>.gallery_bg>.gallery_img{left:50%; top:50%; margin:0; transform:translate(-50%,-50%); width:88%; max-width:380px;}
+
+  /* Contact */
+  #contact{height:auto; padding:80px 20px 60px; box-sizing:border-box;}
+  #contact>h2{position:static; width:100%; margin:0 0 30px; font-size:36px;}
+  #contact>.container{position:static; transform:none; width:100%; padding:0; box-sizing:border-box;}
+  #contact>.container>p{font-size:15px;}
+}
