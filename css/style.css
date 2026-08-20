@@ -301,7 +301,7 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
 
   #aboutme{height:auto; padding:60px 20px 80px; box-sizing:border-box;}
   #aboutme>.content1-left{float:none; width:100%; height:auto;}
-  #aboutme>.content1-left>h2{position:static; width:100%; margin:0 0 30px; font-size:40px;}
+  #aboutme>.content1-left>h2{position:static; width:100%; margin:0 0 30px; font-size:36px;}
   #aboutme>.content1-left>.about-photo-box{position:static; margin:0 auto 30px; display:block; width:60%; max-width:260px; animation:none; transform:none;}
   #aboutme>.content1-left>.about_bg{display:none;}
 
@@ -345,4 +345,10 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #design>.prev,#design>.next{top:200px; margin-top:0;}
   #design>.prev{left:10px;}
   #design>.next{right:10px;}
+
+  /* Contact */
+  #contact{height:auto; padding:60px 20px; box-sizing:border-box;}
+  #contact>h2{position:static; width:100%; margin:0 0 30px; font-size:36px;}
+  #contact>.container{position:static; transform:none; width:100%; padding:0; box-sizing:border-box;}
+  #contact>.container>p{font-size:15px;}
 }
