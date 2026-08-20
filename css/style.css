@@ -350,5 +350,8 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #contact{height:auto; padding:60px 20px; box-sizing:border-box;}
   #contact>h2{position:static; width:100%; margin:0 0 30px; font-size:36px;}
   #contact>.container{position:static; transform:none; width:100%; padding:0; box-sizing:border-box;}
-  #contact>.container>p{font-size:15px;}
+  #contact>.container>p{font-size:15px; line-height:1.6;}
+  #contact>.container>p+p{font-size:13px; margin-top:14px; margin-bottom:14px;}
+  #contact>.container>.link{width:120px;}
+  #contact>.container>.link>a{height:34px; line-height:34px; font-size:13px;}
 }
