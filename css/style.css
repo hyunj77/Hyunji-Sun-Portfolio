@@ -294,6 +294,13 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
 @media (max-width:768px){
   #wrap{min-width:0; zoom:100%;}
 
+  /* 헤더/네비 */
+  header{height:auto; padding:8px 0;}
+  header>.container>nav{position:static; width:100%; height:auto; margin:0;}
+  header>.container>nav>.gnb{display:flex; flex-wrap:wrap; justify-content:center;}
+  header>.container>nav>.gnb>li{float:none; width:auto; margin:2px 6px;}
+  header>.container>nav>.gnb>li>a{height:32px; line-height:32px; font-size:13px;}
+
   /* 팝업이 화면 밖으로 나가서 닫기 버튼을 못 누르는 문제 방지 */
   #portfolio>.portfolio_bg>.portfolio_img{left:50%; top:50%; margin:0; transform:translate(-50%,-50%); width:85%; max-width:380px;}
   #design>.gallery_bg>.gallery_img{left:50%; top:50%; margin:0; transform:translate(-50%,-50%); width:85%; max-width:380px;}
