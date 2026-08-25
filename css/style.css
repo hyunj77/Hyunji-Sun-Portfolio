@@ -47,6 +47,7 @@ html.has-custom-cursor #customCursor{display:flex;}
 /* header */
 header{position:fixed; left:0; bottom:0; width:100%; height:60px; z-index:100; background-color:rgba(255,255,255,0.5);}
 header.active{top:0;}
+header>.container>.mobile-menu-toggle{display:none;}
 header>.container>nav{position:absolute; left:50%; top:0; margin-left:-600px; width:1200px; height:60px;}
 header>.container>nav>.gnb{widows:1200px;}
 header>.container>nav>.gnb>li{float:left; width:200px;}
@@ -286,12 +287,21 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
 @media (max-width:768px){
   #wrap{min-width:0; zoom:100%;}
 
-  /* 헤더/네비 */
-  header{height:auto; padding:8px 0;}
-  header>.container>nav{position:static; width:100%; height:auto; margin:0;}
-  header>.container>nav>.gnb{display:flex; flex-wrap:wrap; justify-content:center;}
-  header>.container>nav>.gnb>li{float:none; width:auto; margin:2px 6px;}
-  header>.container>nav>.gnb>li>a{height:32px; line-height:32px; font-size:13px;}
+  /* 헤더/네비 — 상단 메뉴바 대신 오른쪽 위 햄버거 아이콘. 드롭다운이 항상 헤더 바로 아래 붙도록 헤더를 항상 상단 고정 */
+  header{top:0; height:52px; padding:0; background-color:rgba(255,255,255,0.95);}
+  header>.container{position:relative; height:100%;}
+
+  header>.container>.mobile-menu-toggle{display:flex; flex-direction:column; justify-content:center; align-items:center; gap:5px; position:absolute; top:50%; right:20px; transform:translateY(-50%); width:32px; height:32px; padding:0; background:none; border:none; cursor:pointer; z-index:110;}
+  header>.container>.mobile-menu-toggle>span{display:block; width:22px; height:2px; background-color:#333; border-radius:1px; transition:transform 0.3s ease, opacity 0.3s ease;}
+  header.nav-open>.container>.mobile-menu-toggle>span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav-open>.container>.mobile-menu-toggle>span:nth-child(2){opacity:0;}
+  header.nav-open>.container>.mobile-menu-toggle>span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  header>.container>nav{position:absolute; top:100%; left:0; width:100%; height:auto; margin:0; max-height:0; overflow:hidden; background-color:#fff; box-shadow:0 8px 16px rgba(0,0,0,0.08); transition:max-height 0.35s ease;}
+  header.nav-open>.container>nav{max-height:400px;}
+  header>.container>nav>.gnb{display:flex; flex-direction:column; align-items:center; padding:10px 0;}
+  header>.container>nav>.gnb>li{float:none; width:100%; margin:0;}
+  header>.container>nav>.gnb>li>a{height:auto; line-height:1; padding:14px 0; font-size:16px;}
 
   /* 팝업이 화면 밖으로 나가서 닫기 버튼을 못 누르는 문제 방지 */
   #portfolio>.portfolio_bg>.portfolio_img{left:50%; top:50%; margin:0; transform:translate(-50%,-50%); width:85%; max-width:380px;}
@@ -352,4 +362,7 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #contact>.contact-content{flex-direction:column; gap:40px;}
   #contact .form-row{flex-direction:column;}
   #contact .btn-submit{width:100%;}
+
+  /* 맨 위로 버튼 — 왼쪽에 있으면 본문 텍스트와 겹쳐서 오른쪽 아래로, 크기도 살짝 축소 */
+  #toTop{left:auto; right:16px; bottom:16px; width:40px; height:40px;}
 }

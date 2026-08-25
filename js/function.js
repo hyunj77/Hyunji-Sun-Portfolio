@@ -95,6 +95,15 @@ $(function(){
     $('html,body').stop().animate({
       scrollTop : arrTopVal[nowIdx]
     },500,'easeInOutCubic');
+
+    $header.removeClass('nav-open');
+    $('.mobile-menu-toggle').attr('aria-expanded','false');
+  });
+
+  //모바일 햄버거 메뉴 토글
+  $('.mobile-menu-toggle').on('click',function(){
+    var isOpen = $header.toggleClass('nav-open').hasClass('nav-open');
+    $(this).attr('aria-expanded', isOpen ? 'true' : 'false');
   });
 
   $(window).on('scroll',function(){
