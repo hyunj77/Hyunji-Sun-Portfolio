@@ -52,14 +52,14 @@ $(function(){
       $cursor.css({left:event.clientX+'px', top:event.clientY+'px'});
     });
 
-    $(document).on('mouseenter','a, button, .project-card, .gallOpen', function(){
+    $(document).on('mouseenter','a, button, .project-card, .gallOpen, .scroll-indicator', function(){
       if($(this).hasClass('project-card') || $(this).hasClass('gallOpen')){
         $cursor.addClass('cursor-view').removeClass('cursor-grow');
       }else{
         $cursor.addClass('cursor-grow');
       }
     });
-    $(document).on('mouseleave','a, button, .project-card, .gallOpen', function(){
+    $(document).on('mouseleave','a, button, .project-card, .gallOpen, .scroll-indicator', function(){
       $cursor.removeClass('cursor-grow cursor-view');
     });
   }
