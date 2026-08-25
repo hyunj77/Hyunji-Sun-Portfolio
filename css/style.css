@@ -225,7 +225,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 
 #contact .section-subtitle{font-size:0.95rem; font-weight:700; color:#111; margin-bottom:20px; letter-spacing:0.5px;}
 
-#contact .info-intro{margin-top:-8px; font-size:0.95rem; color:#444; line-height:1.7; word-break:keep-all;}
+#contact .info-intro{margin-top:2px; font-size:0.95rem; color:#444; line-height:1.7; word-break:keep-all;}
 #contact .info-intro>p{margin-bottom:24px;}
 #contact .info-details{font-size:0.9rem; color:#666;}
 #contact .info-details>p{margin-bottom:8px;}
