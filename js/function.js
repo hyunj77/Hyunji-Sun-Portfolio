@@ -46,6 +46,9 @@ $(function(){
   }
   recalcSectionOffsets();
   $(window).on('load',function(){ recalcSectionOffsets(); });
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ recalcSectionOffsets(); });
+  }
 
   //header
   $mnu.on('click',function(event){
