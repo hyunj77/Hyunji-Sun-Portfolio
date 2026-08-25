@@ -233,7 +233,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #contact .info-details a:hover{color:#8FAF9A; border-color:#8FAF9A;}
 
 #contact .contact-form{display:flex; flex-direction:column; gap:14px;}
-#contact .form-row{display:flex; gap:12px;}
+#contact .form-row{display:flex; flex-direction:column; gap:14px;}
 #contact .form-group{flex:1; display:flex; flex-direction:column;}
 #contact .form-group>input,
 #contact .form-group>textarea{width:100%; padding:12px 14px; border:1px solid #e2e2e2; border-radius:4px; background-color:#fafafa; font-family:'Pretendard',sans-serif; font-size:0.88rem; color:#222; outline:none; box-sizing:border-box; transition:border-color 0.2s, background-color 0.2s;}
