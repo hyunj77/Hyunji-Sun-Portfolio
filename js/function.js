@@ -6,8 +6,8 @@ $(function(){
 
 $(function(){
   //커스텀 마우스 커서 — 터치 기기는 건드리지 않고 그대로 둠
-  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  if(!isTouch){
+  var isMouseDevice = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if(isMouseDevice){
     var $html = $('html');
     var $cursor = $('#customCursor');
     $html.addClass('has-custom-cursor');
