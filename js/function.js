@@ -5,6 +5,21 @@ $(function(){
 });//wow plugin 초기화
 
 $(function(){
+  //이미지 우클릭(다른 이름으로 저장/새 탭에서 열기 등) 방지 — 배경 이미지 요소도 함께 차단
+  //단, 개발자도구·화면 캡처까지 막을 수는 없는 캐주얼한 방지용
+  document.addEventListener('contextmenu', function(event){
+    var el = event.target;
+    var hasBgImage = window.getComputedStyle(el).backgroundImage !== 'none';
+    if(el.tagName === 'IMG' || hasBgImage){
+      event.preventDefault();
+    }
+  });
+  document.addEventListener('dragstart', function(event){
+    if(event.target.tagName === 'IMG'){ event.preventDefault(); }
+  });
+});//end of image protect
+
+$(function(){
   //Contact 섹션 등장 효과 — WOW.js는 빠른 스크롤 시 트리거를 놓쳐 영구히 안 보이는 버그가 있어서
   //IntersectionObserver로 안전하게 처리 (시각적으로는 다른 섹션과 동일한 fadeInUp 느낌)
   var revealTargets = document.querySelectorAll('#contact .scroll-reveal');

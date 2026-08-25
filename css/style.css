@@ -28,6 +28,8 @@
 
 body{font-family:'Pretendard',sans-serif; color:#333333; background-color:#ffffff;}
 
+img{-webkit-user-drag:none; -webkit-touch-callout:none;}
+
 /* 스크롤 진행바 */
 #scrollProgress{position:fixed; top:0; left:0; height:4px; width:0%; background-color:#8FAF9A; z-index:200; transition:width 0.1s ease-out;}
 
