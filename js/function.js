@@ -5,6 +5,30 @@ $(function(){
 });//wow plugin 초기화
 
 $(function(){
+  //커스텀 마우스 커서 — 터치 기기는 건드리지 않고 그대로 둠
+  var isMouseDevice = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if(isMouseDevice){
+    var $html = $('html');
+    var $cursor = $('#customCursor');
+    $html.addClass('has-custom-cursor');
+
+    $(window).on('mousemove',function(event){
+      $cursor.css({left:event.clientX+'px', top:event.clientY+'px'});
+    });
+
+    $(document).on('mouseenter','a, button, .project-card, .gallOpen', function(){
+      if($(this).hasClass('project-card')){
+        $cursor.addClass('cursor-view').removeClass('cursor-grow');
+      }else{
+        $cursor.addClass('cursor-grow');
+      }
+    });
+    $(document).on('mouseleave','a, button, .project-card, .gallOpen', function(){
+      $cursor.removeClass('cursor-grow cursor-view');
+    });
+  }
+  //end of 커스텀 커서
+
   //var
   var $header = $('header');
   var $mnu = $('header>.container>nav>.gnb>li>a');
@@ -223,78 +247,3 @@ $(function(){
     if(event.target === this){ $gall.fadeOut(); }
   });//end of design
 });//end of section handler
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const cursor = document.querySelector(".blob-cursor");
-
-  // 마우스 좌표
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-
-  // 실제 커서 위치
-  let currentX = mouseX;
-  let currentY = mouseY;
-
-  // 마우스 움직임
-  document.addEventListener("mousemove", (e) => {
-
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    cursor.classList.remove("is-hidden");
-  });
-
-  // 부드럽게 따라오는 효과
-  function animateCursor() {
-
-    currentX += (mouseX - currentX) * 0.15;
-    currentY += (mouseY - currentY) * 0.15;
-
-    cursor.style.left = `${currentX}px`;
-    cursor.style.top = `${currentY}px`;
-
-    requestAnimationFrame(animateCursor);
-  }
-
-  animateCursor();
-
-
-  // Hover 가능한 요소
-  const hoverElements = document.querySelectorAll(
-    "a, button, input, textarea, select, .hover-effect"
-  );
-
-  hoverElements.forEach((element) => {
-
-    element.addEventListener("mouseenter", () => {
-      cursor.classList.add("is-hover");
-    });
-
-    element.addEventListener("mouseleave", () => {
-      cursor.classList.remove("is-hover");
-    });
-
-  });
-
-
-  // 클릭 효과
-  document.addEventListener("mousedown", () => {
-    cursor.classList.add("is-click");
-  });
-
-  document.addEventListener("mouseup", () => {
-    cursor.classList.remove("is-click");
-  });
-
-
-  // 화면 밖으로 나갔을 때
-  document.addEventListener("mouseleave", () => {
-    cursor.classList.add("is-hidden");
-  });
-
-  document.addEventListener("mouseenter", () => {
-    cursor.classList.remove("is-hidden");
-  });
-
-});
