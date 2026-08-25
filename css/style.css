@@ -177,7 +177,6 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
   0%,100%{transform:rotate(-8deg) translateY(0);}
   50%{transform:rotate(-5deg) translateY(-6px);}
 }
-#aboutme>.content1-left>.about_bg{position:absolute; left:0; bottom:140px; width:700px; height:570px; background-color:rgba(143,175,154,0.3);}
 
 #aboutme>.content1-right{position:absolute; top:290px; right:50%; margin-right:-600px; float:left; width:650px; height:auto;}
 #aboutme>.content1-right>.profile{width:650px; height:auto;}
@@ -198,6 +197,8 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 
 /* 카테고리(학력/수료/경력/자격) 제목 */
 #aboutme .resume-block{margin-bottom:22px;}
+#aboutme .resume-block.js-reveal{opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease;}
+#aboutme .resume-block.js-reveal.in{opacity:1; transform:translateY(0);}
 #aboutme .resume-cate{padding-bottom:8px; margin-bottom:12px; font-size:17px; font-weight:700; color:#333333; border-bottom:1px solid #ddd;}
 
 /* 제목+부가설명(아래) */
@@ -346,7 +347,6 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #aboutme>.content1-left{float:none; width:100%; height:auto;}
   #aboutme>.content1-left>h2{position:static; width:100%; margin:0 0 30px; font-size:36px;}
   #aboutme>.content1-left>.about-photo-box{position:static; margin:0 auto 30px; display:block; width:60%; max-width:260px; animation:none; transform:none;}
-  #aboutme>.content1-left>.about_bg{display:none;}
 
   #aboutme>.content1-right{position:static; float:none; width:100%; margin:0;}
   #aboutme>.content1-right>.profile{position:relative; width:100%; padding-top:44px;}

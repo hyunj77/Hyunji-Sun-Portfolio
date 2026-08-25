@@ -139,6 +139,14 @@ $(function(){
   //end of skills 필터
 
   //about me — 이전/다음으로 페이지 전환
+  //클릭 시 항목을 다시 나타나게 트리거 (숨겨진 상태에서는 스크롤 감지 효과가 안 먹어서 직접 재생)
+  function replayReveal($page){
+    var $blocks = $page.find('.js-reveal');
+    $blocks.removeClass('in');
+    void $blocks.get(0) && $blocks.get(0).offsetHeight;
+    $blocks.addClass('in');
+  }
+
   $mePrev.on('click',function(){
     if(meIdx>0){
       meIdx--;
@@ -149,6 +157,7 @@ $(function(){
     if(meIdx<meLast){ $meNext.removeClass('on'); }
 
     $aboutme.eq(meIdx).show().siblings().hide();
+    replayReveal($aboutme.eq(meIdx));
   });
 
   $meNext.on('click',function(){
@@ -161,6 +170,7 @@ $(function(){
     if(meIdx>0){ $mePrev.removeClass('on'); }
 
     $aboutme.eq(meIdx).show().siblings().hide();
+    replayReveal($aboutme.eq(meIdx));
   });
   //end of about me
 
