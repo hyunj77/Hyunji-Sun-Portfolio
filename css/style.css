@@ -120,6 +120,7 @@
   font-display: swap;
 }
 
+html{zoom:85.5%;}
 body{font-family:'Pretendard',sans-serif; color:#333333; background-color:#ffffff;}
 
 /* 스크롤 진행바 */
@@ -133,7 +134,7 @@ html.has-custom-cursor #customCursor{display:flex;}
 #customCursor.cursor-grow{width:36px; height:36px; background-color:rgba(143,175,154,0.45);}
 #customCursor.cursor-view{width:70px; height:70px; background-color:rgba(66,90,73,0.9);}
 #customCursor.cursor-view>span{opacity:1;}
-#wrap{width:100%; min-width:1200px; zoom:85.5%;}
+#wrap{width:100%; min-width:1200px;}
 ::selection{background-color:#D9AFAF;}
 
 /* header */
@@ -328,7 +329,8 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
 
 /* 모바일 - About me만 대응 (사원증 위, 텍스트 아래로 세로 배치) */
 @media (max-width:768px){
-  #wrap{min-width:0; zoom:100%;}
+  html{zoom:100%;}
+  #wrap{min-width:0;}
 
   /* 헤더/네비 */
   header{height:auto; padding:8px 0;}
