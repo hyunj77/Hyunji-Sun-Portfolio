@@ -147,6 +147,9 @@ $(function(){
     $blocks.addClass('in');
   }
 
+  //첫 페이지(전공/수료)는 로드 시 한 번 재생
+  setTimeout(function(){ replayReveal($aboutme.eq(0)); }, 300);
+
   $mePrev.on('click',function(){
     if(meIdx>0){
       meIdx--;
