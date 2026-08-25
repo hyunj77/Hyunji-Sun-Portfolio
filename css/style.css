@@ -125,14 +125,6 @@ body{font-family:'Pretendard',sans-serif; color:#333333; background-color:#fffff
 /* 스크롤 진행바 */
 #scrollProgress{position:fixed; top:0; left:0; height:4px; width:0%; background-color:#8FAF9A; z-index:200; transition:width 0.1s ease-out;}
 
-/* 커스텀 마우스 커서 (터치 기기에서는 JS에서 비활성화) */
-html.has-custom-cursor *{cursor:none;}
-#customCursor{display:none; position:fixed; top:0; left:0; width:16px; height:16px; border-radius:50%; background-color:#8FAF9A; opacity:0.6; pointer-events:none; z-index:500; align-items:center; justify-content:center; transform:translate(-50%,-50%); transition:width 0.25s ease, height 0.25s ease, background-color 0.25s ease;}
-html.has-custom-cursor #customCursor{display:flex;}
-#customCursor>span{opacity:0; font-size:11px; font-weight:700; color:#fff; letter-spacing:1px; white-space:nowrap; transition:opacity 0.2s ease;}
-#customCursor.cursor-grow{width:36px; height:36px; background-color:rgba(143,175,154,0.45);}
-#customCursor.cursor-view{width:70px; height:70px; background-color:rgba(66,90,73,0.9);}
-#customCursor.cursor-view>span{opacity:1;}
 #wrap{width:100%; min-width:1200px; zoom:85.5%;}
 ::selection{background-color:#D9AFAF;}
 
@@ -397,4 +389,149 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #contact>.container>p+p{font-size:13px; margin-top:14px; margin-bottom:14px;}
   #contact>.container>.link{width:120px;}
   #contact>.container>.link>a{height:34px; line-height:34px; font-size:13px;}
+}
+
+/* ========================================
+   Blob Custom Cursor
+======================================== */
+
+@media (pointer: fine) {
+
+  body {
+    cursor: none;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+
+  .blob-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 32px;
+    height: 32px;
+
+    pointer-events: none;
+    z-index: 99999;
+
+    transform: translate(-50%, -50%);
+
+    background: rgba(139, 207, 139, 0.75);
+
+    border-radius:
+      58% 42% 63% 37%
+      / 45% 58% 42% 55%;
+
+    filter: blur(0.3px);
+
+    mix-blend-mode: multiply;
+
+    transition:
+      width 0.35s cubic-bezier(.22, 1, .36, 1),
+      height 0.35s cubic-bezier(.22, 1, .36, 1),
+      background 0.35s ease,
+      opacity 0.3s ease;
+
+    animation: blobMorph 4s ease-in-out infinite;
+  }
+
+  /* Blob 내부의 부드러운 빛 */
+  .blob-cursor::after {
+    content: "";
+
+    position: absolute;
+    inset: 5px;
+
+    border-radius: inherit;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    filter: blur(5px);
+  }
+
+  /* Hover */
+  .blob-cursor.is-hover {
+    width: 65px;
+    height: 65px;
+
+    background: rgba(111, 191, 115, 0.35);
+
+    mix-blend-mode: normal;
+  }
+
+  /* Click */
+  .blob-cursor.is-click {
+    width: 20px;
+    height: 20px;
+
+    transition:
+      width 0.12s ease,
+      height 0.12s ease;
+  }
+
+  /* 마우스가 화면을 벗어났을 때 */
+  .blob-cursor.is-hidden {
+    opacity: 0;
+  }
+
+  /* Blob 모양이 계속 변하는 효과 */
+  @keyframes blobMorph {
+
+    0% {
+      border-radius:
+        58% 42% 63% 37%
+        / 45% 58% 42% 55%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(0deg);
+    }
+
+    25% {
+      border-radius:
+        42% 58% 38% 62%
+        / 58% 40% 60% 42%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(8deg);
+    }
+
+    50% {
+      border-radius:
+        63% 37% 48% 52%
+        / 42% 63% 37% 58%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(-5deg);
+    }
+
+    75% {
+      border-radius:
+        48% 52% 61% 39%
+        / 63% 45% 55% 37%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(5deg);
+    }
+
+    100% {
+      border-radius:
+        58% 42% 63% 37%
+        / 45% 58% 42% 55%;
+
+      transform:
+        translate(-50%, -50%)
+        rotate(0deg);
+    }
+  }
+
 }
