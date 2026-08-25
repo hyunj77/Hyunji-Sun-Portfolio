@@ -127,7 +127,7 @@ body{font-family:'Pretendard',sans-serif; color:#333333; background-color:#fffff
 #scrollProgress{position:fixed; top:0; left:0; height:4px; width:0%; background-color:#8FAF9A; z-index:200; transition:width 0.1s ease-out;}
 
 /* 커스텀 마우스 커서 (터치 기기에서는 JS에서 비활성화) */
-html.has-custom-cursor *{cursor:none;}
+html.has-custom-cursor *{cursor:none !important;}
 #customCursor{display:none; position:fixed; top:0; left:0; width:16px; height:16px; border-radius:50%; background-color:#8FAF9A; opacity:0.6; pointer-events:none; z-index:500; align-items:center; justify-content:center; transform:translate(-50%,-50%); transition:width 0.25s ease, height 0.25s ease, background-color 0.25s ease;}
 html.has-custom-cursor #customCursor{display:flex;}
 #customCursor>span{opacity:0; font-size:11px; font-weight:700; color:#fff; letter-spacing:1px; white-space:nowrap; transition:opacity 0.2s ease;}
