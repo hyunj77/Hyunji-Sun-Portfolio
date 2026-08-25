@@ -64,6 +64,15 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #home>.home-side{position:absolute; top:40px; right:30px; display:flex; flex-direction:column; align-items:center;}
 #home>.home-side>.home-side-line{width:1px; height:190px; background-color:#999;}
 #home>.home-side>.home-side-text{margin-top:30px; writing-mode:vertical-rl; font-weight:300; letter-spacing:2px; text-align:center;}
+
+#home>.scroll-indicator{position:absolute; left:50%; bottom:50px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer;}
+#home>.scroll-indicator>.scroll-indicator-text{font-size:11px; font-weight:700; letter-spacing:3px; color:#999;}
+#home>.scroll-indicator>.scroll-indicator-arrow-wrap{animation:scrollIndicatorBounce 1.6s ease-in-out infinite;}
+#home>.scroll-indicator>.scroll-indicator-arrow-wrap>.scroll-indicator-arrow{display:block; width:11px; height:11px; border-right:2px solid #8FAF9A; border-bottom:2px solid #8FAF9A; transform:rotate(45deg);}
+@keyframes scrollIndicatorBounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(8px);}
+}
 #aboutme>.content1-left>h2,
 #skills>h2,
 #portfolio>h2,

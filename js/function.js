@@ -139,6 +139,11 @@ $(function(){
     $('html,body').stop().animate({scrollTop:0},500,'easeInOutCubic');
   });
 
+  //Hero 하단 스크롤 다운 인디케이터 — 클릭하면 다음 섹션(About me)으로 이동
+  $('#home>.scroll-indicator').on('click',function(){
+    $('html,body').stop().animate({scrollTop:arrTopVal[1]},500,'easeInOutCubic');
+  });
+
 });//end of header handler
 
 $(function(){
