@@ -166,6 +166,8 @@ $(function(){
   var $viewClose = $('.viewClose');
   var $view = $('#portfolio>.portfolio_bg');
   var $viewTitle = $('#portfolio>.portfolio_bg>.portfolio_img>.view-detail-title');
+  var $viewDesc = $('#portfolio>.portfolio_bg>.portfolio_img>.view-detail-desc');
+  var $viewNotice = $('#portfolio>.portfolio_bg>.portfolio_img>.notice-text');
 
   var $dePrev = $('#design>.prev');
   var $deNext = $('#design>.next');
@@ -239,10 +241,18 @@ $(function(){
   });
   //end of about me
 
-  // 실제 프로젝트 이미지/내용이 아직 없어서 카드 제목만 채우고 안내 표시
+  // 프로젝트 상세 설명이 준비된 카드는 설명을 보여주고, 아직인 카드는 "준비중" 안내만 표시
   $viewOpen.on('click',function(event){
     event.preventDefault();
+    var desc = $(this).data('desc');
     $viewTitle.text($(this).data('title'));
+    if(desc){
+      $viewDesc.text(desc).show();
+      $viewNotice.hide();
+    }else{
+      $viewDesc.hide();
+      $viewNotice.show();
+    }
     $view.fadeIn();
   });
 
@@ -321,4 +331,34 @@ $(function(){
   $gall.on('click',function(event){
     if(event.target === this){ $gall.fadeOut(); }
   });//end of design
+
+  //Design 갤러리는 990px 고정 그리드라, 모바일에서는 화면 폭에 맞는 비율로 축소해서
+  //화면 끝까지 꽉 차게 만듦 (고정 scale 값 하나로는 기기마다 폭이 달라 안 맞았음)
+  var GALLERY_WIDTH = 990;
+  var GALLERY_HEIGHT = 530;
+
+  function fitDesignGallery(){
+    var $designSection = $('#design');
+    var $designContainer = $('#design>.container');
+    var $designH2 = $('#design>h2');
+    var $designBtns = $('#design>.prev, #design>.next');
+
+    if(window.matchMedia('(max-width:768px)').matches){
+      var sectionWidth = $designSection.width();
+      var scale = sectionWidth / GALLERY_WIDTH;
+      var scaledHeight = GALLERY_HEIGHT * scale;
+      var containerTop = $designH2.position().top + $designH2.outerHeight(true) + 20;
+
+      $designContainer.css({top:containerTop, transform:'scale('+scale+')'});
+      $designBtns.css('top', containerTop + scaledHeight/2);
+      $designSection.css('height', containerTop + scaledHeight + 40);
+    }else{
+      $designContainer.css({top:'', transform:''});
+      $designBtns.css('top','');
+      $designSection.css('height','');
+    }
+  }
+
+  fitDesignGallery();
+  $(window).on('load resize orientationchange', fitDesignGallery);
 });//end of section handler

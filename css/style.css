@@ -162,6 +162,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #portfolio>.portfolio_bg>.portfolio_img>.viewClose{position:absolute; right:16px; top:12px; font-size:20px; color:#999;}
 #portfolio>.portfolio_bg>.portfolio_img>.view-detail-title{margin-top:20px; font-size:24px; font-weight:700; color:#8FAF9A;}
 #portfolio>.portfolio_bg>.portfolio_img>.notice-text{margin-top:80px; font-size:16px; font-weight:700; color:#777777;}
+#portfolio>.portfolio_bg>.portfolio_img>.view-detail-desc{display:none; margin-top:20px; font-size:14px; line-height:1.6; color:#555555; word-break:keep-all;}
 #portfolio>.portfolio_bg>.portfolio_img>.view-detail-link{display:inline-block; margin-top:24px; padding:0 24px; height:40px; line-height:40px; font-size:15px; color:#8FAF9A; border:1px solid #8FAF9A; border-radius:5px; transition:all 0.3s;}
 #portfolio>.portfolio_bg>.portfolio_img>.view-detail-link:hover{color:#fff; background-color:#8FAF9A;}
 
@@ -347,12 +348,14 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #portfolio>.container>.project-grid>.project-card>.project-name{font-size:14px; margin-top:10px;}
 
   /* Design - 구조/슬라이드 그대로, 크기만 축소 (Project와 동일한 제목-본문 여백) */
-  #design{position:relative; width:100%; height:410px; padding:60px 0 0; box-sizing:border-box; overflow-x:hidden;}
+  /* #design 모바일 레이아웃 — 갤러리 자체가 990px 고정 그리드라 화면 폭에 맞춰
+     비율(scale)을 JS에서 계산함 (function.js의 fitDesignGallery 참고) */
+  #design{position:relative; width:100%; padding:60px 0 0; box-sizing:border-box; overflow-x:hidden;}
   #design>h2{padding-top:0; margin-bottom:0; font-size:36px;}
-  #design>.prev,#design>.next{position:absolute; top:119px; margin-top:0; left:auto;}
+  #design>.prev,#design>.next{position:absolute; margin-top:0; left:auto;}
   #design>.prev{right:64px;}
   #design>.next{right:20px;}
-  #design>.container{position:absolute; left:50%; top:166px; margin-left:-495px; transform:scale(0.38); transform-origin:top center;}
+  #design>.container{position:absolute; left:50%; margin-left:-495px; transform-origin:top center;}
 
   /* Contact */
   #contact{padding:60px 20px;}
