@@ -5,6 +5,30 @@ $(function(){
 });//wow plugin 초기화
 
 $(function(){
+  //커스텀 마우스 커서 — 터치 기기는 건드리지 않고 그대로 둠
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if(!isTouch){
+    var $html = $('html');
+    var $cursor = $('#customCursor');
+    $html.addClass('has-custom-cursor');
+
+    $(window).on('mousemove',function(event){
+      $cursor.css({left:event.clientX+'px', top:event.clientY+'px'});
+    });
+
+    $(document).on('mouseenter','a, button, .project-card, .gallOpen', function(){
+      if($(this).hasClass('project-card')){
+        $cursor.addClass('cursor-view').removeClass('cursor-grow');
+      }else{
+        $cursor.addClass('cursor-grow');
+      }
+    });
+    $(document).on('mouseleave','a, button, .project-card, .gallOpen', function(){
+      $cursor.removeClass('cursor-grow cursor-view');
+    });
+  }
+  //end of 커스텀 커서
+
   //var
   var $header = $('header');
   var $mnu = $('header>.container>nav>.gnb>li>a');
