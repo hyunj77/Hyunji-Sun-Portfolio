@@ -17,7 +17,7 @@ $(function(){
     });
 
     $(document).on('mouseenter','a, button, .project-card, .gallOpen', function(){
-      if($(this).hasClass('project-card')){
+      if($(this).hasClass('project-card') || $(this).hasClass('gallOpen')){
         $cursor.addClass('cursor-view').removeClass('cursor-grow');
       }else{
         $cursor.addClass('cursor-grow');
@@ -39,9 +39,13 @@ $(function(){
   var nowIdx = 0;
   var arrTopVal = [];
 
-  $('section').each(function(idx){
-    arrTopVal[idx] = $(this).offset().top;
-  });
+  function recalcSectionOffsets(){
+    $('section').each(function(idx){
+      arrTopVal[idx] = $(this).offset().top;
+    });
+  }
+  recalcSectionOffsets();
+  $(window).on('load',function(){ recalcSectionOffsets(); });
 
   //header
   $mnu.on('click',function(event){
@@ -73,6 +77,11 @@ $(function(){
       if(scrollTop>=arrTopVal[i]){
         $mnu.eq(i).parent().addClass('on').siblings().removeClass('on');
       }
+    }
+
+    //페이지 맨 아래에 도달하면 offset 오차와 상관없이 마지막 메뉴(Contact) 강제 활성화
+    if(scrollTop + $(window).height() >= $(document).height() - 5){
+      $mnu.eq(arrTopVal.length-1).parent().addClass('on').siblings().removeClass('on');
     }
 
     //스크롤 진행바

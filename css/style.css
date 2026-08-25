@@ -265,7 +265,7 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #portfolio>.container>.project-grid>.project-card>.project-name{margin-top:16px; font-size:18px; font-weight:700; color:#333333; text-align:center;}
 
 /* design */
-#design{position:relative; width:1200px; height:810px; margin:0 auto;}
+#design{position:relative; width:1200px; height:920px; margin:0 auto;}
 #design>h2{margin-bottom:20px; padding-top:150px; font-size:70px; font-weight:700; color:#8FAF9A; letter-spacing:1px; text-align:center;}
 
 #design>.container{position:relative; overflow:hidden; width:990px; height:530px; margin:0 auto;}
