@@ -5,6 +5,27 @@ $(function(){
 });//wow plugin 초기화
 
 $(function(){
+  //Contact 섹션 등장 효과 — WOW.js는 빠른 스크롤 시 트리거를 놓쳐 영구히 안 보이는 버그가 있어서
+  //IntersectionObserver로 안전하게 처리 (시각적으로는 다른 섹션과 동일한 fadeInUp 느낌)
+  var revealTargets = document.querySelectorAll('#contact .scroll-reveal');
+  if(revealTargets.length){
+    if('IntersectionObserver' in window){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.15});
+      revealTargets.forEach(function(el){ observer.observe(el); });
+    }else{
+      revealTargets.forEach(function(el){ el.classList.add('in'); });
+    }
+  }
+});//end of contact reveal
+
+$(function(){
   //커스텀 마우스 커서 — 터치 기기는 건드리지 않고 그대로 둠
   var isMouseDevice = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if(isMouseDevice){
