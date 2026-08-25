@@ -121,6 +121,9 @@
 }
 
 body{font-family:'Pretendard',sans-serif; color:#333333; background-color:#ffffff;}
+
+/* 스크롤 진행바 */
+#scrollProgress{position:fixed; top:0; left:0; height:4px; width:0%; background-color:#8FAF9A; z-index:200; transition:width 0.1s ease-out;}
 #wrap{width:100%; min-width:1200px; zoom:85.5%;}
 ::selection{background-color:#D9AFAF;}
 
@@ -240,8 +243,8 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 
 #portfolio>.container>.project-grid{width:1100px; margin:60px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:40px;}
 #portfolio>.container>.project-grid>.project-card{width:320px; cursor:pointer;}
-#portfolio>.container>.project-grid>.project-card>.project-mockup{position:relative; border-radius:10px; overflow:hidden; background-color:#fff; border:1px solid #eee; transition:transform 0.3s;}
-#portfolio>.container>.project-grid>.project-card:hover>.project-mockup{transform:translateY(-6px) scale(1.04);}
+#portfolio>.container>.project-grid>.project-card{perspective:800px;}
+#portfolio>.container>.project-grid>.project-card>.project-mockup{position:relative; border-radius:10px; overflow:hidden; background-color:#fff; border:1px solid #eee; transition:transform 0.3s; transform-style:preserve-3d; will-change:transform;}
 #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-overlay{position:absolute; left:0; bottom:0; width:100%; box-sizing:border-box; padding:16px; background-color:rgba(66,90,73,0.78); opacity:0; transform:translateY(8px); transition:opacity 0.3s, transform 0.3s;}
 #portfolio>.container>.project-grid>.project-card:hover>.project-mockup>.project-overlay{opacity:1; transform:translateY(0);}
 #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-overlay>.project-overlay-title{font-size:16px; font-weight:700; color:#fff;}

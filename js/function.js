@@ -10,6 +10,7 @@ $(function(){
   var $mnu = $('header>.container>nav>.gnb>li>a');
   var $tag = $('#aboutme>.content1-right>.tag>ul>li>a');
   var $toTop = $('#toTop');
+  var $scrollProgress = $('#scrollProgress');
   var scrollTop = 0;
   var nowIdx = 0;
   var arrTopVal = [];
@@ -49,6 +50,11 @@ $(function(){
         $mnu.eq(i).parent().addClass('on').siblings().removeClass('on');
       }
     }
+
+    //스크롤 진행바
+    var docHeight = $(document).height() - $(window).height();
+    var progress = docHeight>0 ? (scrollTop/docHeight)*100 : 0;
+    $scrollProgress.css('width', progress+'%');
   });//end of header event
 
   //tag — 장식용 키워드라 클릭해도 페이지 이동은 하지 않음
@@ -148,6 +154,28 @@ $(function(){
 
   $view.on('click',function(event){
     if(event.target === this){ $view.fadeOut(); }
+  });
+
+  //프로젝트 카드 마우스 틸트 효과
+  $('#portfolio>.container>.project-grid>.project-card').on('mousemove',function(event){
+    var $mockup = $(this).find('.project-mockup');
+    var rect = this.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    var midX = rect.width/2;
+    var midY = rect.height/2;
+    var rotateY = ((x-midX)/midX)*8;
+    var rotateX = -((y-midY)/midY)*8;
+
+    $mockup.css({
+      'transition':'none',
+      'transform':'translateY(-6px) scale(1.03) rotateX('+rotateX+'deg) rotateY('+rotateY+'deg)'
+    });
+  }).on('mouseleave',function(){
+    $(this).find('.project-mockup').css({
+      'transition':'transform 0.4s ease',
+      'transform':'none'
+    });
   });
   //end of portfolio
 
