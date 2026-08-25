@@ -347,15 +347,23 @@ footer>address{padding-top:30px; font-size:14px; font-weight:300; color:#fff; li
   #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{height:90px;}
   #portfolio>.container>.project-grid>.project-card>.project-name{font-size:14px; margin-top:10px;}
 
-  /* Design - 구조/슬라이드 그대로, 크기만 축소 (Project와 동일한 제목-본문 여백) */
-  /* #design 모바일 레이아웃 — 갤러리 자체가 990px 고정 그리드라 화면 폭에 맞춰
-     비율(scale)을 JS에서 계산함 (function.js의 fitDesignGallery 참고) */
-  #design{position:relative; width:100%; padding:60px 0 0; box-sizing:border-box; overflow-x:hidden;}
-  #design>h2{padding-top:0; margin-bottom:0; font-size:36px;}
-  #design>.prev,#design>.next{position:absolute; margin-top:0; left:auto;}
-  #design>.prev{right:64px;}
-  #design>.next{right:20px;}
-  #design>.container{position:absolute; left:50%; margin-left:-495px; transform-origin:top center;}
+  /* Design — 모바일에서는 웹/그래픽 구분 없이 10개를 한 장씩 넘겨보기.
+     화살표 버튼은 박스 좌우 옆에 고정 */
+  #design{position:relative; width:100%; height:auto; padding:60px 20px; box-sizing:border-box;}
+  #design>h2{padding-top:0; margin-bottom:30px; font-size:36px;}
+  #design>.prev,#design>.next{position:absolute; top:50%; margin-top:60px; left:auto;}
+  #design>.prev{left:4px;}
+  #design>.next{right:4px;}
+
+  #design>.container{position:static; width:100%; height:auto; margin:0; overflow:visible;}
+  #design>.container>ul{position:static; width:100%; height:auto;}
+  #design>.container>ul>li{position:static; float:none; width:100%; height:auto; transform:none; transition:none;}
+
+  #design>.container>ul>li>h3.sr-only{display:none;}
+
+  #design>.container>ul>li>.gallery{display:block;}
+  #design>.container>ul>li>.gallery>li{display:none !important; width:100% !important; height:260px !important; margin:0 !important; line-height:260px !important;}
+  #design>.container>ul>li>.gallery>li.mobile-on{display:block !important;}
 
   /* Contact */
   #contact{padding:60px 20px;}
