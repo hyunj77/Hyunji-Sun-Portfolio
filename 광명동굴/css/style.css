@@ -294,9 +294,8 @@ img {
 }
 
 .hero-title-lg {
-  font-family: "Paperlogy", "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
   font-size: 44px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.5px;
 }
 
@@ -367,7 +366,7 @@ img {
   background: #2a2a2a;
   color: #fff;
   border-radius: 16px;
-  padding: 20px;
+  padding: 47px 20px 20px;
 }
 
 .info-card h2,
