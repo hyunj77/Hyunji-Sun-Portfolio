@@ -1,5 +1,26 @@
 @charset "UTF-8";
 
+@font-face {
+  font-family: "Nanum Square Neo";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nanum Square Neo";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nanum Square Neo";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-dEb.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -305,6 +326,7 @@ img {
   max-width: 1200px;
   margin: 200px auto 0;
   padding: 0 24px;
+  font-family: "Nanum Square Neo", "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
 }
 
 .info-grid {
@@ -395,10 +417,16 @@ img {
   background: #444;
 }
 
+.notice-block {
+  background: #2a2a2a;
+  border-radius: 16px;
+  padding: 20px;
+}
+
 .notice-block h2 {
-  color: #1a1a1a;
+  color: #fff;
   padding-bottom: 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .notice-list li {
@@ -406,12 +434,13 @@ img {
   flex-direction: column;
   gap: 2px;
   padding: 12px 0;
-  border-bottom: 1px dashed #eee;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
 .notice-list-title {
   font-size: 16px;
   font-weight: 600;
+  color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
