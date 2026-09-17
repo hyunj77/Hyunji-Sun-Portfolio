@@ -117,10 +117,19 @@ function renderInstagramCarousel() {
   const list = cards();
   let lastCentered = list[Math.floor(list.length / 2)];
 
+  // Center a card within the track itself via scrollLeft, not
+  // scrollIntoView — scrollIntoView's "nearest" block option still scrolls
+  // the whole page vertically when the carousel is below the fold on load,
+  // which is what caused the page to jump on refresh.
+  const centerCardInTrack = (card, behavior) => {
+    const target = card.offsetLeft + card.offsetWidth / 2 - track.clientWidth / 2;
+    track.scrollTo({ left: target, behavior });
+  };
+
   // Growing the active card (bigger photo + frame padding) after a swipe
-  // settles shifts its own center — re-run scrollIntoView once sizing has
-  // applied so the card that just became active ends up truly centered,
-  // not just the point where the browser's native snap first landed.
+  // settles shifts its own center — re-center once sizing has applied so
+  // the card that just became active ends up truly centered, not just the
+  // point where the browser's native snap first landed.
   let settleTimer = null;
   let ticking = false;
   track.addEventListener("scroll", () => {
@@ -136,7 +145,7 @@ function renderInstagramCarousel() {
       const closest = updateActiveCard();
       if (closest && closest !== lastCentered) {
         lastCentered = closest;
-        closest.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        centerCardInTrack(closest, "smooth");
       }
     }, 120);
   });
@@ -145,10 +154,10 @@ function renderInstagramCarousel() {
 
   if (lastCentered) {
     // Apply is-active BEFORE scrolling so the card is already at its
-    // grown (active) width — scrollIntoView on the pre-growth width
-    // centers the wrong point once the card expands afterward.
+    // grown (active) width — centering on the pre-growth width would
+    // center the wrong point once the card expands afterward.
     list.forEach((c) => c.classList.toggle("is-active", c === lastCentered));
-    lastCentered.scrollIntoView({ behavior: "auto", inline: "center", block: "nearest" });
+    centerCardInTrack(lastCentered, "auto");
   }
   updateActiveCard();
 
@@ -164,7 +173,7 @@ function renderInstagramCarousel() {
         // active size BEFORE scrolling, or the post-scroll growth shifts
         // it off-center.
         all.forEach((c) => c.classList.toggle("is-active", c === target));
-        target.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        centerCardInTrack(target, "smooth");
       }
     };
     prevBtn.addEventListener("click", () => scrollByCard(-1));
