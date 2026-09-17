@@ -498,7 +498,7 @@ img {
   background: #2a2a2a;
   color: #fff;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -524,7 +524,7 @@ img {
   background: #2a2a2a;
   border-radius: 0;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
