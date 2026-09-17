@@ -432,7 +432,7 @@ img {
 }
 
 .notice-block {
-  padding: 20px 0 0;
+  padding: 20px 0 0 12px;
 }
 
 .notice-block h2 {
