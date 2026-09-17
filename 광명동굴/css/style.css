@@ -432,15 +432,13 @@ img {
 }
 
 .notice-block {
-  background: #2a2a2a;
-  border-radius: 16px;
-  padding: 20px;
+  padding: 20px 0 0;
 }
 
 .notice-block h2 {
-  color: #fff;
+  color: #1a1a1a;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .notice-list li {
@@ -448,12 +446,12 @@ img {
   flex-direction: column;
   gap: 2px;
   padding: 12px 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
 }
 
 .notice-list-title {
   font-size: 16px;
-  color: #fff;
+  color: #1a1a1a;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -461,7 +459,7 @@ img {
 
 .notice-list span {
   font-size: 14px;
-  color: #b3b3b3;
+  color: #767676;
 }
 
 .cards-col {
@@ -479,20 +477,23 @@ img {
 }
 
 .feature-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px 16px 0 0;
+  position: relative;
+  border-radius: 16px;
   overflow: hidden;
 }
 
 .feature-card-img {
-  flex: 1;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
 }
 
 .feature-card-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 16px 20px;
   background: #2a2a2a;
   color: #fff;
