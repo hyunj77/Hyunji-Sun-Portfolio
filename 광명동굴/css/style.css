@@ -353,7 +353,7 @@ img {
 
 .info-grid {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 440px 1fr;
   gap: 24px;
 }
 
