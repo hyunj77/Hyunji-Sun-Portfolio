@@ -58,48 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
 const IG_PROFILE_URL = "https://www.instagram.com/gmcave_official";
 
 const IG_POSTS = [
-  {
-    image: "20200121_4.png",
-    caption: "밤이 되면 더 반짝이는 광명동굴 문화행사 현장 ✨ #광명동굴 #동굴테마파크",
-    likes: 482,
-    comments: 21,
-    date: "3일 전",
-  },
-  {
-    image: "hall_pic27.png",
-    caption: "대한민국 와인 페스티벌 in 광명동굴 🍇🍷 #광명동굴와인축제",
-    likes: 356,
-    comments: 14,
-    date: "5일 전",
-  },
-  {
-    image: "cvgc_001.png",
-    caption: "라스코전시관에서 만나는 선사시대 동굴벽화 🦌 #라스코전시관",
-    likes: 271,
-    comments: 9,
-    date: "1주 전",
-  },
-  {
-    image: "hall_pic1_230810.jpg",
-    caption: "웜홀광장, 빛으로 가득한 동굴 식물원 🦋 #웜홀광장 #광명동굴",
-    likes: 519,
-    comments: 33,
-    date: "2주 전",
-  },
-  {
-    image: "hall_pic2.jpg",
-    caption: "빛의 공간에서 만나는 몽환적인 동굴 산책길 💙 #빛의공간",
-    likes: 604,
-    comments: 27,
-    date: "2주 전",
-  },
-  {
-    image: "cvgc_002.png",
-    caption: "동굴 속 숨어있는 포토스팟, 용 조형물을 찾아보세요 🐉 #광명동굴포토스팟",
-    likes: 388,
-    comments: 18,
-    date: "3주 전",
-  },
+  { image: "images/news/news1.png", caption: "광명동굴 신상 굿즈 홍보 비하인드" },
+  { image: "images/news/news2.png", caption: "예술의전당 파사드쇼 임시 운영중단 안내" },
+  { image: "images/news/news3.png", caption: "지역화폐 사용 인증" },
+  { image: "images/news/news4.png", caption: "암흑스테이지 이벤트 안내" },
+  { image: "images/news/news5.png", caption: "암흑스테이지 현장 스케치" },
+  { image: "images/news/news6.png", caption: "운영시간 안내 Q&A" },
+  { image: "images/news/news7.png", caption: "8월 휴장일 안내" },
+  { image: "images/news/news8.png", caption: "야간 조명 인생샷" },
+  { image: "images/news/news9.png", caption: "방문객 인증샷" },
 ];
 
 const IG_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -213,14 +180,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const MIN_SCALE = 1;
     const MAX_SCALE = 3;
     const ZOOM_STEP = 0.15;
-    // Native size of images/cavegm_map_screenshot.png (a stitched, detail-zoom
-    // capture wider than the preview box) so we can size/clamp it ourselves
-    // instead of relying on object-fit, which would hide the extra width.
-    const IMG_NATURAL_WIDTH = 5449;
-    const IMG_NATURAL_HEIGHT = 1290;
-    // Calibrated so that at scale 1 a 70px bar reads "50 m", matching the
-    // real electronic map's own scale readout at the same zoom level.
-    const METERS_PER_PX_AT_SCALE_1 = 50 / 70;
+    // Native size of images/cavegm_map_screenshot.jpg (a single wide capture,
+    // wider than the preview box) so we can size/clamp it ourselves instead
+    // of relying on object-fit, which would hide the extra width.
+    const IMG_NATURAL_WIDTH = 4420;
+    const IMG_NATURAL_HEIGHT = 1280;
+    // Calibrated from the real electronic map's own "100 m" scale readout at
+    // the same zoom level this capture was taken at.
+    const METERS_PER_PX_AT_SCALE_1 = 2.286;
     const SCALE_BAR_TARGET_PX = 80;
     let scale = 1;
     let tx = 0;
