@@ -350,16 +350,9 @@ img {
 
 .info-card h2,
 .notice-block h2 {
+  font-size: 16px;
   font-weight: 800;
   margin-bottom: 12px;
-}
-
-.info-card h2 {
-  font-size: 16px;
-}
-
-.notice-block h2 {
-  font-size: 22px;
 }
 
 .info-list div {
