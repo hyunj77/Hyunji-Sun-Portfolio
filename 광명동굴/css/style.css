@@ -1,0 +1,1117 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color: #1a1a1a;
+  background: #f5f5f5;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.section-title {
+  text-align: center;
+  font-family: "Poppins", "Nanum Gothic", sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #543d32;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin-top: 16px;
+}
+
+/* ===== Header ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(22, 23, 27, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: 42px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.gnb {
+  flex: 1;
+}
+
+.gnb ul {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.gnb-item {
+  display: inline-block;
+  font-family: "Poppins", "Nanum Gothic", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+  width: 22px;
+}
+
+.mobile-menu-toggle span {
+  height: 2px;
+  background: #fff;
+}
+
+.lang-select-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 120px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  padding: 6px;
+}
+
+.lang-menu[hidden] {
+  display: none;
+}
+
+.lang-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  background: none;
+  border-radius: 6px;
+  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lang-menu button:hover {
+  background: #f0f0f0;
+}
+
+.icon-globe {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  object-fit: contain;
+}
+
+.lang-arrow {
+  font-size: 10px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("../광명동굴 HERO.jpe");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55));
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: "Poppins", "Nanum Gothic", sans-serif;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: "Poppins", "Nanum Gothic", sans-serif;
+  line-height: 1.3;
+}
+
+.hero-title-sm {
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.hero-title-lg {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.hero-desc {
+  margin-top: 16px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.ticket-fab {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 90;
+  width: 84px;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 50%;
+  border: 0;
+  background: #1976d2;
+  color: #fff;
+  font-family: "Noto Sans KR", "Nanum Gothic", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 1px 4px 14px rgba(255, 255, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.15s ease;
+}
+
+.ticket-fab:hover {
+  box-shadow: 1px 4px 18px rgba(255, 255, 255, 0.4), 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.ticket-fab-icon {
+  flex-shrink: 0;
+}
+
+/* ===== Info section ===== */
+.info-section {
+  max-width: 1200px;
+  margin: 200px auto 0;
+  padding: 0 24px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+}
+
+.info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-card {
+  background: #2a2a2a;
+  color: #fff;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.info-card h2,
+.notice-block h2 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.info-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-list div:first-child {
+  border-top: 0;
+}
+
+.info-list dt {
+  color: rgba(255, 255, 255, 0.55);
+  flex-shrink: 0;
+}
+
+.info-list dd {
+  text-align: right;
+  line-height: 1.5;
+}
+
+.info-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #2a2a2a;
+  border-radius: 16px;
+  height: 80px;
+}
+
+.info-actions-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  padding: 0 24px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.info-actions-icon {
+  font-size: 24px;
+  opacity: 0.95;
+}
+
+.info-actions-divider {
+  width: 1px;
+  height: 32px;
+  background: #444;
+}
+
+.notice-block h2 {
+  color: #1a1a1a;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.notice-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.notice-list-title {
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notice-list span {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.cards-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.feature-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  flex: 1;
+  min-height: 0;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+}
+
+.feature-card-img {
+  flex: 1;
+  min-height: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-card-title {
+  padding: 20px 24px;
+  background: #2a2a2a;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+.pill-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.pill-tabs-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100px;
+  padding: 24px;
+  background: #2a2a2a;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  transition: box-shadow 0.15s;
+}
+
+.pill-tabs-item:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Culture section ===== */
+.culture-section {
+  max-width: 1200px;
+  margin: 200px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.culture-list {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.culture-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  display: block;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid #543d32;
+  background: #543d32;
+  opacity: 0.5;
+}
+
+.dot.on {
+  border: none;
+  opacity: 1;
+}
+
+/* ===== Story banner ===== */
+.story-banner {
+  background: #2a2a2a;
+  color: #fff;
+  margin-top: 200px;
+  padding: 64px 24px;
+}
+
+.story-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+}
+
+.story-photo {
+  width: 380px;
+  height: 260px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.story-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  text-align: left;
+}
+
+.story-text {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.story-text-light {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.story-text strong {
+  color: #c6e21e;
+  font-weight: 700;
+}
+
+.btn-more {
+  padding: 12px 28px;
+  border: 0;
+  background: #fff;
+  color: #1a1a1a;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-more:hover {
+  opacity: 0.85;
+}
+
+/* ===== Tour map ===== */
+.tour-map-section {
+  max-width: 1200px;
+  margin: 200px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.map-embed {
+  display: block;
+  margin-top: 32px;
+  text-align: left;
+}
+
+.map-embed-preview {
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+
+.map-embed-preview.is-dragging {
+  cursor: grabbing;
+}
+
+.map-embed-preview img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  transform-origin: 0 0;
+  transform: translate(0px, 0px) scale(1);
+  transition: transform 0.08s ease-out;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.map-embed-preview.is-dragging img {
+  transition: none;
+}
+
+.map-zoom-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.map-zoom-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #fff;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.map-zoom-btn:hover {
+  background: #f2f2f2;
+}
+
+.map-zoom-btn + .map-zoom-btn {
+  border-top: 1px solid #e5e5e5;
+}
+
+.map-scale-bar {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #222;
+}
+
+.map-scale-bar-line {
+  display: block;
+  height: 6px;
+  width: 70px;
+  border-left: 2px solid #222;
+  border-right: 2px solid #222;
+  border-bottom: 2px solid #222;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.map-scale-bar-label {
+  margin-top: 2px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* ===== News ===== */
+.news-section {
+  max-width: 1400px;
+  margin: 200px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.news-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 56px;
+}
+
+.news-list {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 20px 4px 24px;
+  scrollbar-width: none;
+}
+
+.news-list::-webkit-scrollbar {
+  display: none;
+}
+
+.news-prev,
+.news-next {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 0;
+  background: #fff;
+  color: #222;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.15s ease;
+}
+
+.news-prev:hover,
+.news-next:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+/* ---- Instagram card ---- */
+.ig-spacer {
+  flex: 0 0 calc(50% - 120px);
+}
+
+.ig-card {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+
+.ig-card-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 40px;
+}
+
+.ig-card-photo {
+  display: block;
+  width: 190px;
+  height: 214px;
+  border-radius: 30px;
+  background-size: cover;
+  background-position: center;
+}
+
+.ig-card-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin-top: 16px;
+  border-radius: 16px;
+  border: 1px solid #444;
+  background: #fff;
+  color: #222;
+  font-family: "Inter", "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.18px;
+  white-space: nowrap;
+}
+
+.ig-card-btn-icon {
+  display: flex;
+}
+
+.ig-card-btn-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ig-card.is-active {
+  z-index: 1;
+}
+
+.ig-card.is-active .ig-card-frame {
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+}
+
+.ig-card.is-active .ig-card-photo {
+  width: 240px;
+  height: 296px;
+}
+
+.ig-card.is-active .ig-card-btn {
+  display: flex;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: #16171b;
+  color: #b3b3b3;
+  margin-top: 200px;
+  padding: 32px 24px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  font-size: 12px;
+}
+
+.footer-copy {
+  width: 100%;
+}
+
+.footer-sns {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-sns span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo {
+  margin-left: auto;
+  height: 32px;
+  width: auto;
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 1400px) {
+  .hero {
+    min-height: 100vh;
+    align-items: center;
+  }
+
+  .hero-content {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-inner {
+    padding: 16px 20px;
+    gap: 16px;
+  }
+
+  .hero {
+    min-height: 640px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .hero-content {
+    padding: 72px 20px;
+  }
+
+  .ticket-fab {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .info-section,
+  .culture-section,
+  .tour-map-section,
+  .news-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 120px;
+  }
+
+  .story-banner,
+  .site-footer {
+    margin-top: 120px;
+  }
+
+  .story-banner-inner {
+    gap: 32px;
+  }
+
+  .story-photo {
+    width: 260px;
+    height: 190px;
+  }
+
+  .map-embed-preview {
+    height: 440px;
+  }
+
+  .gnb {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #16171b;
+    padding: 16px 24px;
+  }
+
+  .gnb.open {
+    display: block;
+  }
+
+  .gnb ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    order: 3;
+  }
+
+  .lang-select-wrap {
+    margin-left: auto;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-cards {
+    grid-template-columns: 1fr;
+    flex: none;
+  }
+
+  .feature-card-img {
+    flex: none;
+    height: 280px;
+  }
+
+  .pill-tabs {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .pill-tabs-item {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 84px;
+    padding: 12px 6px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .pill-tabs-item .arrow {
+    font-size: 14px;
+  }
+
+  .info-list dd {
+    line-height: 1.3;
+  }
+
+  .info-list div {
+    padding: 8px 0;
+  }
+
+  .notice-list-title {
+    font-size: 15px;
+  }
+
+  .notice-list span {
+    font-size: 13px;
+  }
+
+  .culture-list {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .culture-circle {
+    width: 140px;
+    height: 140px;
+  }
+
+  .story-banner-inner {
+    flex-direction: column;
+  }
+
+  .story-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .feature-card {
+    min-height: 200px;
+  }
+
+  .pill-tabs {
+    gap: 12px;
+  }
+
+  .culture-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .map-embed-preview {
+    height: 340px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .ig-card-photo {
+    width: 140px;
+    height: 158px;
+  }
+
+  .ig-card.is-active .ig-card-photo {
+    width: 190px;
+    height: 234px;
+  }
+
+  .ig-card-btn,
+  .ig-card.is-active .ig-card-btn {
+    padding: 7px 14px;
+    font-size: 11px;
+  }
+
+  .news-prev,
+  .news-next {
+    display: none;
+  }
+
+  .ticket-fab {
+    width: 68px;
+    height: 68px;
+    font-size: 11px;
+  }
+
+  .hero-title-lg {
+    font-size: 26px;
+  }
+
+  .hero-title-sm {
+    font-size: 16px;
+  }
+
+  .info-actions {
+    flex-direction: column;
+  }
+
+  .culture-list {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .culture-circle {
+    width: 44vw;
+    height: 44vw;
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  .story-text {
+    font-size: 16px;
+  }
+}
