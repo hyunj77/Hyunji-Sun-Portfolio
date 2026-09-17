@@ -417,7 +417,6 @@ img {
   padding: 0 24px;
   color: #fff;
   font-size: 15px;
-  font-weight: 500;
   cursor: pointer;
 }
 
@@ -454,7 +453,6 @@ img {
 
 .notice-list-title {
   font-size: 16px;
-  font-weight: 600;
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
