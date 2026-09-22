@@ -1,4 +1,22 @@
+// 포트폴리오 사이트가 이 페이지를 다른 도메인(vercel.app)에서 iframe으로
+// 미리보기할 때, 같은 출처가 아니라서 부모 창이 직접 스크롤시킬 수 없다.
+// 대신 postMessage로 스크롤 요청을 받아 처리한다.
+window.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "portfolio-preview-scroll") {
+    window.scrollBy(0, event.data.deltaY);
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
+  const siteHeader = document.querySelector(".site-header");
+  if (siteHeader) {
+    const syncHeaderScrolled = () => {
+      siteHeader.classList.toggle("is-scrolled", window.scrollY > 0);
+    };
+    syncHeaderScrolled();
+    window.addEventListener("scroll", syncHeaderScrolled, { passive: true });
+  }
+
   const menuToggle = document.querySelector(".mobile-menu-toggle");
   const gnb = document.querySelector(".gnb");
 
@@ -48,12 +66,47 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   renderInstagramCarousel();
+  initScrollReveal();
 });
 
+function initScrollReveal() {
+  // getBoundingClientRect-based check (not IntersectionObserver): the
+  // reveal-down elements start clip-path'd to zero visible area, and some
+  // browsers treat that as "not intersecting" forever, so IO never fires.
+  let targets = Array.from(document.querySelectorAll(".reveal-down"));
+  if (!targets.length) return;
+
+  let ticking = false;
+
+  function revealInView() {
+    const vh = window.innerHeight;
+    targets = targets.filter((el) => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top < vh * 0.88 && rect.bottom > 0;
+      if (inView) el.classList.add("is-visible");
+      return !inView;
+    });
+    ticking = false;
+    if (!targets.length) {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(revealInView);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  revealInView();
+}
+
 /**
- * Instagram carousel — mock data now, swap IG_POSTS for a real API/widget
- * response later (Elfsight, Juicer, or a self-hosted Graph API proxy) and
- * this render/nav logic keeps working unchanged.
+ * Instagram carousel — posts are added manually: save the image under
+ * images/news/ and add its path + caption to IG_POSTS below.
  */
 const IG_PROFILE_URL = "https://www.instagram.com/gmcave_official";
 
@@ -79,8 +132,7 @@ function renderInstagramCarousel() {
   const nextBtn = document.querySelector(".news-next");
   if (!track) return;
 
-  const cardsHtml = IG_POSTS.map(
-    (post) => `
+  const cardHtml = (post) => `
       <li class="ig-card">
         <div class="ig-card-frame">
           <a class="ig-card-photo" href="${IG_PROFILE_URL}" target="_blank" rel="noopener noreferrer" style="background-image:url('${post.image}');" aria-label="${post.caption}"></a>
@@ -90,8 +142,18 @@ function renderInstagramCarousel() {
           </a>
         </div>
       </li>
-    `
-  ).join("");
+    `;
+
+  // The set is repeated many times so the carousel always has real cards
+  // ahead in either direction — no snap-back-to-center trick, it just keeps
+  // moving forward/backward through fresh (repeated-content) cards. 15 laps
+  // is far more than anyone clicks through in one sitting.
+  const SET_SIZE = IG_POSTS.length;
+  const REPEAT_COUNT = 21;
+  const cardsHtml = Array.from({ length: REPEAT_COUNT }, () => IG_POSTS)
+    .flat()
+    .map(cardHtml)
+    .join("");
 
   track.innerHTML = `<li class="ig-spacer" aria-hidden="true"></li>${cardsHtml}<li class="ig-spacer" aria-hidden="true"></li>`;
 
@@ -116,6 +178,7 @@ function renderInstagramCarousel() {
 
   const list = cards();
   let lastCentered = list[Math.floor(list.length / 2)];
+  let activeAbsIndex = Math.floor(list.length / 2);
 
   // Center a card within the track itself via scrollLeft, not
   // scrollIntoView — scrollIntoView's "nearest" block option still scrolls
@@ -143,7 +206,9 @@ function renderInstagramCarousel() {
     clearTimeout(settleTimer);
     settleTimer = setTimeout(() => {
       const closest = updateActiveCard();
-      if (closest && closest !== lastCentered) {
+      if (!closest) return;
+      activeAbsIndex = cards().indexOf(closest);
+      if (closest !== lastCentered) {
         lastCentered = closest;
         centerCardInTrack(closest, "smooth");
       }
@@ -164,17 +229,15 @@ function renderInstagramCarousel() {
   if (prevBtn && nextBtn) {
     const scrollByCard = (dir) => {
       const all = cards();
-      const active = all.find((c) => c.classList.contains("is-active")) || all[0];
-      const idx = all.indexOf(active);
-      const target = all[idx + dir];
-      if (target) {
-        lastCentered = target;
-        // Same fix as the initial centering: grow the target to its
-        // active size BEFORE scrolling, or the post-scroll growth shifts
-        // it off-center.
-        all.forEach((c) => c.classList.toggle("is-active", c === target));
-        centerCardInTrack(target, "smooth");
-      }
+      const target = all[activeAbsIndex + dir];
+      if (!target) return;
+      activeAbsIndex += dir;
+      lastCentered = target;
+      // Same fix as the initial centering: grow the target to its
+      // active size BEFORE scrolling, or the post-scroll growth shifts
+      // it off-center.
+      all.forEach((c) => c.classList.toggle("is-active", c === target));
+      centerCardInTrack(target, "smooth");
     };
     prevBtn.addEventListener("click", () => scrollByCard(-1));
     nextBtn.addEventListener("click", () => scrollByCard(1));
@@ -198,7 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // the same zoom level this capture was taken at.
     const METERS_PER_PX_AT_SCALE_1 = 2.286;
     const SCALE_BAR_TARGET_PX = 80;
-    let scale = 1;
+    // Where the cave entrance cluster sits in the base (scale-1) capture, as
+    // a fraction of its full width/height — used to center that spot in the
+    // box at the default zoom instead of opening on the image's left edge.
+    const INITIAL_SCALE = 2.2;
+    const INITIAL_FOCUS_X = 0.54;
+    const INITIAL_FOCUS_Y = 0.32;
+    let scale = INITIAL_SCALE;
     let tx = 0;
     let ty = 0;
 
@@ -261,9 +330,28 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
     };
 
+    // Plain wheel zooms the map again, but only once the cursor has rested
+    // over it for 2s — scrolling the page past the map no longer gets
+    // hijacked the instant the cursor crosses it; you have to pause on it
+    // first to "arm" zoom, matching the intent without needing Ctrl/Cmd.
+    const ZOOM_ARM_DELAY = 2000;
+    let zoomArmed = false;
+    let armTimer = null;
+
+    mapPreview.addEventListener("mouseenter", () => {
+      clearTimeout(armTimer);
+      armTimer = setTimeout(() => { zoomArmed = true; }, ZOOM_ARM_DELAY);
+    });
+
+    mapPreview.addEventListener("mouseleave", () => {
+      clearTimeout(armTimer);
+      zoomArmed = false;
+    });
+
     mapPreview.addEventListener(
       "wheel",
       (e) => {
+        if (!zoomArmed) return;
         e.preventDefault();
         const rect = mapPreview.getBoundingClientRect();
         const offsetX = e.clientX - rect.left;
@@ -283,6 +371,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    tx = mapPreview.clientWidth / 2 - INITIAL_FOCUS_X * baseWidth() * scale;
+    ty = mapPreview.clientHeight / 2 - INITIAL_FOCUS_Y * baseHeight() * scale;
     render();
 
     let isDragging = false;

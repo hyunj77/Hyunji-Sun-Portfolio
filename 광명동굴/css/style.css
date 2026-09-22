@@ -96,7 +96,7 @@ img {
   text-align: center;
   color: #543d32;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   margin-top: 16px;
 }
@@ -108,10 +108,14 @@ img {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(22, 23, 27, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
   color: #fff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.site-header.is-scrolled {
+  background: #16171b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .header-inner {
@@ -146,13 +150,42 @@ img {
 }
 
 .gnb-item {
+  position: relative;
   display: inline-block;
   font-family: "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.3px;
   text-transform: uppercase;
   opacity: 0.9;
+  cursor: pointer;
+  padding-bottom: 4px;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+}
+
+.gnb-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.gnb-item:hover {
+  opacity: 1;
+}
+
+.gnb-item:hover::after {
+  transform: scaleX(1);
+}
+
+.gnb-item:active {
+  transform: scale(0.94);
 }
 
 .mobile-menu-toggle {
@@ -166,6 +199,11 @@ img {
   background: none;
   border: 0;
   cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.mobile-menu-toggle:active {
+  transform: scale(0.88);
 }
 
 .mobile-menu-toggle span {
@@ -189,9 +227,18 @@ img {
   background: none;
   border: 0;
   color: #fff;
-  font-size: 13px;
+  font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.lang-select:hover {
+  opacity: 0.8;
+}
+
+.lang-select:active {
+  transform: scale(0.94);
 }
 
 .lang-menu {
@@ -218,14 +265,20 @@ img {
   background: none;
   border-radius: 6px;
   color: #1a1a1a;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   text-align: left;
   cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease;
 }
 
 .lang-menu button:hover {
   background: #f0f0f0;
+}
+
+.lang-menu button:active {
+  transform: scale(0.97);
+  background: #e5e5e5;
 }
 
 .icon-globe {
@@ -236,7 +289,7 @@ img {
 }
 
 .lang-arrow {
-  font-size: 10px;
+  font-size: 16px;
 }
 
 /* ===== Hero ===== */
@@ -252,9 +305,15 @@ img {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("../광명동굴 HERO.jpe");
+  background-image: url("../hero/main.jpe");
   background-size: cover;
   background-position: center;
+  animation: heroBgZoomOut 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroBgZoomOut {
+  from { transform: scale(1.18); }
+  to { transform: scale(1); }
 }
 
 .hero-bg::after {
@@ -274,9 +333,10 @@ img {
 
 .hero-eyebrow {
   font-family: "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.85;
   margin-bottom: 12px;
+  --reveal-opacity: 0.85;
 }
 
 .hero-title {
@@ -288,9 +348,10 @@ img {
 }
 
 .hero-title-sm {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 400;
   opacity: 0.9;
+  --reveal-opacity: 0.9;
 }
 
 .hero-title-lg {
@@ -302,11 +363,45 @@ img {
 
 .hero-desc {
   margin-top: 16px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.6;
   opacity: 0.85;
+  --reveal-opacity: 0.85;
 }
+
+.hero-eyebrow,
+.hero-title-sm,
+.hero-title-lg,
+.hero-desc {
+  animation: heroRevealDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-eyebrow { animation-delay: 0.05s; }
+.hero-title-sm { animation-delay: 0.13s; }
+.hero-title-lg { animation-delay: 0.21s; }
+.hero-desc { animation-delay: 0.29s; }
+
+@keyframes heroRevealDown {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: var(--reveal-opacity, 1); transform: translateY(0); }
+}
+
+/* scroll reveal — fades in while easing up into place as it enters view */
+.reveal-down {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-down.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-down-group > *:nth-child(2) { transition-delay: 0.08s; }
+.reveal-down-group > *:nth-child(3) { transition-delay: 0.16s; }
+.reveal-down-group > *:nth-child(4) { transition-delay: 0.24s; }
 
 .ticket-fab {
   position: fixed;
@@ -332,15 +427,28 @@ img {
   white-space: nowrap;
   cursor: pointer;
   box-shadow: 1px 4px 14px rgba(255, 255, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  animation: ticketFabFloat 3s ease-in-out infinite;
 }
 
 .ticket-fab:hover {
+  animation-play-state: paused;
+  transform: scale(1.06);
   box-shadow: 1px 4px 18px rgba(255, 255, 255, 0.4), 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.ticket-fab:active {
+  animation-play-state: paused;
+  transform: scale(0.94);
 }
 
 .ticket-fab-icon {
   flex-shrink: 0;
+}
+
+@keyframes ticketFabFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* ===== Info section ===== */
@@ -382,7 +490,7 @@ img {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 0;
-  font-size: 13px;
+  font-size: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -416,8 +524,17 @@ img {
   height: 100%;
   padding: 0 24px;
   color: #fff;
-  font-size: 15px;
+  font-size: 16px;
   cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+}
+
+.info-actions-item:hover {
+  opacity: 0.8;
+}
+
+.info-actions-item:active {
+  transform: scale(0.96);
 }
 
 .info-actions-icon {
@@ -458,7 +575,7 @@ img {
 }
 
 .notice-list span {
-  font-size: 14px;
+  font-size: 16px;
   color: #767676;
 }
 
@@ -480,6 +597,12 @@ img {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.feature-card:active {
+  transform: scale(0.97);
 }
 
 .feature-card-img {
@@ -487,6 +610,11 @@ img {
   inset: 0;
   background-size: cover;
   background-position: center;
+  transition: transform 0.35s ease;
+}
+
+.feature-card:hover .feature-card-img {
+  transform: scale(1.08);
 }
 
 .feature-card-title {
@@ -507,6 +635,12 @@ img {
 .arrow {
   font-size: 20px;
   opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.feature-card:hover .arrow,
+.pill-tabs-item:hover .arrow {
+  transform: translateX(4px);
 }
 
 .pill-tabs {
@@ -522,10 +656,20 @@ img {
   min-height: 105px;
   padding: 16px 24px;
   background: #2a2a2a;
-  border-radius: 0;
+  border-radius: 16px;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.pill-tabs-item:hover {
+  background: #3a3a3a;
+}
+
+.pill-tabs-item:active {
+  transform: scale(0.96);
 }
 
 /* ===== Culture section ===== */
@@ -630,11 +774,15 @@ img {
   color: #1a1a1a;
   border-radius: 9999px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s, transform 0.12s ease;
+}
+
+.btn-more:active {
+  transform: scale(0.94);
 }
 
 .btn-more:hover {
@@ -706,10 +854,16 @@ img {
   border: none;
   background: #fff;
   color: #333;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.map-zoom-btn:active {
+  transform: scale(0.9);
+  background: #e5e5e5;
 }
 
 .map-zoom-btn:hover {
@@ -728,7 +882,7 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   color: #222;
 }
@@ -791,15 +945,20 @@ img {
   border: 0;
   background: #fff;
   color: #222;
-  font-size: 22px;
+  font-size: 24px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.15s ease, transform 0.12s ease;
 }
 
 .news-prev:hover,
 .news-next:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+.news-prev:active,
+.news-next:active {
+  transform: scale(0.9);
 }
 
 /* ---- Instagram card ---- */
@@ -840,11 +999,20 @@ img {
   background: #fff;
   color: #222;
   font-family: "Nanum Gothic", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
   letter-spacing: -0.18px;
   white-space: nowrap;
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.ig-card-btn:hover {
+  opacity: 0.85;
+}
+
+.ig-card-btn:active {
+  transform: scale(0.94);
 }
 
 .ig-card-btn-icon {
@@ -890,11 +1058,13 @@ img {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 24px;
-  font-size: 12px;
+  font-size: 16px;
 }
 
-.footer-copy {
-  width: 100%;
+.footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .footer-sns {
@@ -913,7 +1083,7 @@ img {
 }
 
 .footer-logo {
-  margin-left: auto;
+  flex-shrink: 0;
   height: 32px;
   width: auto;
 }
@@ -1034,12 +1204,12 @@ img {
     gap: 8px;
     min-height: 84px;
     padding: 12px 6px;
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
   }
 
   .pill-tabs-item .arrow {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .info-list dd {
@@ -1051,11 +1221,11 @@ img {
   }
 
   .notice-list-title {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .notice-list span {
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .culture-list {
@@ -1117,7 +1287,7 @@ img {
   .ig-card-btn,
   .ig-card.is-active .ig-card-btn {
     padding: 7px 14px;
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .news-prev,
@@ -1132,7 +1302,7 @@ img {
   }
 
   .hero-title-lg {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .hero-title-sm {

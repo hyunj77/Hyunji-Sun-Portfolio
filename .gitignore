@@ -1,0 +1,25 @@
+.vercel
+.env*
+
+ColorPalette/
+NekoBread/
+css/style.css.bak
+index.html.bak
+images/사원증.ai
+images/사원증2.ai
+images/contact식물1.avif
+images/contact식물2.avif
+images/contact식물3.avif
+사용한 것들/
+
+광명동굴/CAVE 지도.htm
+광명동굴/웹사이트 캡쳐/
+광명동굴/황금길.jpg
+광명동굴/문화행사/황금길 1.jpg
+광명동굴/hero/hall_pic3_230810.png
+광명동굴/hero/hall_pic3_230810 png.png
+광명동굴/hero/hall_pic1_230810 (1).jpg
+광명동굴/hero/hall_pic36.png
+광명동굴/종합안내도 CAVE.jpg
+광명동굴/다운로드.jpe
+광명동굴/*.fig

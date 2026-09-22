@@ -70,7 +70,6 @@ $(function(){
   var $mnu = $('header>.container>nav>.gnb>li>a');
   var $tag = $('#aboutme>.content1-right>.tag>ul>li>a');
   var $toTop = $('#toTop');
-  var $scrollProgress = $('#scrollProgress');
   var scrollTop = 0;
   var nowIdx = 0;
   var arrTopVal = [];
@@ -131,11 +130,6 @@ $(function(){
     if(scrollTop + $(window).height() >= $(document).height() - 5){
       $mnu.eq(arrTopVal.length-1).parent().addClass('on').siblings().removeClass('on');
     }
-
-    //스크롤 진행바
-    var docHeight = $(document).height() - $(window).height();
-    var progress = docHeight>0 ? (scrollTop/docHeight)*100 : 0;
-    $scrollProgress.css('width', progress+'%');
   });//end of header event
 
   //tag — 장식용 키워드라 클릭해도 페이지 이동은 하지 않음
@@ -164,11 +158,48 @@ $(function(){
 
   var $viewOpen = $('.viewOpen');
   var $viewClose = $('.viewClose');
-  var $view = $('#portfolio>.portfolio_bg');
-  var $viewTitle = $('#portfolio>.portfolio_bg>.portfolio_img>.view-detail-title');
-  var $viewDesc = $('#portfolio>.portfolio_bg>.portfolio_img>.view-detail-desc');
-  var $viewNotice = $('#portfolio>.portfolio_bg>.portfolio_img>.notice-text');
-  var $viewLink = $('#portfolio>.portfolio_bg>.portfolio_img>.view-detail-link');
+  var $view = $('.portfolio_bg');
+  var $viewImg = $('.portfolio_bg>.portfolio_img');
+  var $viewTitle = $viewImg.find('.view-detail-title');
+  var $viewDesc = $viewImg.find('.view-detail-desc');
+  var $viewNotice = $viewImg.find('.notice-text');
+  var $viewLink = $viewImg.find('.view-detail-link');
+  var $viewOriginalLink = $viewImg.find('.view-detail-original-link');
+  var $viewTags = $viewImg.find('.view-detail-tags');
+  var $viewPreview = $viewImg.find('.view-preview');
+  var $viewPreviewFrame = $viewImg.find('.view-preview-frame');
+
+  // 미리보기 위에서 휠을 굴리면 카드 자체가 아니라, 그 안의 실제 사이트가
+  // 스크롤되도록 한다 — iframe이 축소 표시 중이라 델타값을 배율만큼 보정.
+  // 같은 출처(로컬 페이지 등)면 직접 스크롤하고, 다른 도메인이면 postMessage로
+  // 스크롤 요청을 보낸다 (Green Thumb처럼 이 메시지를 받아 처리하도록 되어
+  // 있는 사이트만 반응하고, 그 외에는 조용히 무시된다).
+  $viewPreview.on('wheel', function(event){
+    var deltaY = event.originalEvent.deltaY;
+    var scale = $viewPreviewFrame.data('scale') || 1;
+    var frameWin = $viewPreviewFrame[0].contentWindow;
+    var scrollAmount = deltaY / scale;
+    try{
+      // behavior:'instant'로 강제 — 대상 사이트에 scroll-behavior:smooth가
+      // 걸려 있으면 빠른 휠 이벤트마다 애니메이션이 다시 시작되면서
+      // 스크롤이 느리고 뚝뚝 끊기는 느낌이 난다.
+      frameWin.scrollBy({ top: scrollAmount, left: 0, behavior: 'instant' });
+    }catch(e){
+      frameWin.postMessage({ type: 'portfolio-preview-scroll', deltaY: scrollAmount }, '*');
+    }
+    event.preventDefault();
+  });
+  var $viewMeta = $viewImg.find('.view-detail-meta');
+  var $viewRoleRow = $viewImg.find('.view-detail-role-row');
+  var $viewRole = $viewImg.find('.view-detail-role');
+  var $viewPeriodRow = $viewImg.find('.view-detail-period-row');
+  var $viewPeriod = $viewImg.find('.view-detail-period');
+  var $viewTechStackRow = $viewImg.find('.view-detail-techstack-row');
+  var $viewTechStackText = $viewImg.find('.view-detail-techstack-text');
+  var $viewToolsRow = $viewImg.find('.view-detail-tools-row');
+  var $viewToolsText = $viewImg.find('.view-detail-tools-text');
+  var $viewPoints = $viewImg.find('.view-detail-points');
+  var $viewBadges = $viewImg.find('.view-detail-badges');
 
   var $dePrev = $('#design>.prev');
   var $deNext = $('#design>.next');
@@ -177,7 +208,7 @@ $(function(){
   var deLast = $designs.length - 1;
   var $gallOpen = $('.gallOpen');
   var $gallClose = $('.gallClose');
-  var $gall = $('#design>.gallery_bg');
+  var $gall = $('.gallery_bg');
 
   var meIdx = 0;
   var deIdx = 0;
@@ -242,12 +273,29 @@ $(function(){
   });
   //end of about me
 
-  // 프로젝트 상세 설명이 준비된 카드는 설명을 보여주고, 아직인 카드는 "준비중" 안내만 표시
+  // 프로젝트 상세 설명이 준비된 카드는 미리보기+상세 정보를 보여주고,
+  // 아직 내용이 없는 카드는 "준비중" 안내만 표시
   $viewOpen.on('click',function(event){
     event.preventDefault();
-    var desc = $(this).data('desc');
-    var link = $(this).data('link');
-    $viewTitle.text($(this).data('title'));
+    var $card = $(this);
+    var desc = $card.data('desc');
+    var link = $card.data('link');
+    var tags = $card.data('tags');
+    var role = $card.data('role');
+    var period = $card.data('period');
+    var techStack = $card.data('tech-stack');
+    var tools = $card.data('tools');
+    var points = $card.data('points');
+    var originalLink = $card.data('original-link');
+
+    $viewTitle.text($card.data('title'));
+
+    // 미리보기 배율 계산이 실제 렌더링된 너비를 읽어야 하므로,
+    // 내용을 채우기 전에 먼저 모달을 표시한다 (display:none 상태에서는
+    // .width()가 정확한 값을 반환하지 않는다).
+    $view.fadeIn();
+    $viewImg.scrollTop(0);
+
     if(desc){
       $viewDesc.text(desc).show();
       $viewNotice.hide();
@@ -255,12 +303,100 @@ $(function(){
       $viewDesc.hide();
       $viewNotice.show();
     }
+
     if(link){
       $viewLink.attr('href', link).show();
     }else{
       $viewLink.hide();
     }
-    $view.fadeIn();
+
+    if(originalLink){
+      $viewOriginalLink.attr('href', originalLink).show();
+    }else{
+      $viewOriginalLink.hide();
+    }
+
+    // 미리보기 iframe은 실제로 열어볼 링크(외부/로컬 페이지)가 있을 때만 표시.
+    // 항상 데스크톱 너비(1440px)로 렌더링한 뒤 미리보기 박스 너비에 맞게
+    // 축소해서 보여준다 — 그대로 크기만 줄이면 사이트의 모바일 브레이크포인트가
+    // 뒤섞여 레이아웃이 깨지기 때문. 박스 자체 높이는 고정(한눈에 보이는
+    // 레이아웃 유지)이고, 휠로 iframe 내부를 스크롤해서 사이트의 아래쪽
+    // 내용을 확인한다.
+    if(link){
+      var previewScale = $viewPreview.width() / 1440;
+      $viewPreviewFrame.css('transform', 'scale(' + previewScale + ')');
+      $viewPreviewFrame.data('scale', previewScale);
+      $viewPreviewFrame.attr('src', link);
+      $viewPreview.show();
+    }else{
+      $viewPreviewFrame.attr('src', '');
+      $viewPreview.hide();
+    }
+
+    if(tags){
+      $viewTags.text(tags).show();
+    }else{
+      $viewTags.hide();
+    }
+
+    // 각 메타 행은 dt/dd가 가로로 나란히 있어야 해서 jQuery show()가 아니라
+    // display:flex로 직접 지정 (show()는 div 기본값인 block으로 되돌려버림)
+    if(role){
+      $viewRole.text(role);
+      $viewRoleRow.css('display','flex');
+    }else{
+      $viewRoleRow.hide();
+    }
+
+    if(period){
+      $viewPeriod.text(period);
+      $viewPeriodRow.css('display','flex');
+    }else{
+      $viewPeriodRow.hide();
+    }
+
+    if(techStack){
+      $viewTechStackText.text(techStack);
+      $viewTechStackRow.css('display','flex');
+    }else{
+      $viewTechStackRow.hide();
+    }
+
+    if(tools){
+      $viewToolsText.text(tools);
+      $viewToolsRow.css('display','flex');
+    }else{
+      $viewToolsRow.hide();
+    }
+
+    // 하단 뱃지는 기술 스택 + 개발 도구를 합쳐서 보여준다
+    var badgeSource = [];
+    if(techStack){ badgeSource = badgeSource.concat(techStack.split(',')); }
+    if(tools){ badgeSource = badgeSource.concat(tools.split(',')); }
+
+    if(badgeSource.length){
+      $viewBadges.empty();
+      badgeSource.forEach(function(item){
+        var label = item.trim();
+        if(label){ $viewBadges.append($('<span class="stack-badge"></span>').text(label)); }
+      });
+      $viewBadges.css('display','flex');
+    }else{
+      $viewBadges.hide().empty();
+    }
+
+    if(points){
+      $viewPoints.empty();
+      points.split('|').forEach(function(item){
+        var label = item.trim();
+        if(label){ $viewPoints.append($('<li></li>').text(label)); }
+      });
+      $viewPoints.show();
+    }else{
+      $viewPoints.hide().empty();
+    }
+
+    $viewMeta.toggle(Boolean(role || period || techStack || tools));
   });
 
   $viewClose.on('click',function(event){
