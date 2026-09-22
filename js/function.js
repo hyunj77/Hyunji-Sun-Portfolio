@@ -20,9 +20,9 @@ $(function(){
 });//end of image protect
 
 $(function(){
-  //Contact 섹션 등장 효과 — WOW.js는 빠른 스크롤 시 트리거를 놓쳐 영구히 안 보이는 버그가 있어서
+  //About me/Contact 섹션 등장 효과 — WOW.js는 빠른 스크롤 시 트리거를 놓쳐 영구히 안 보이는 버그가 있어서
   //IntersectionObserver로 안전하게 처리 (시각적으로는 다른 섹션과 동일한 fadeInUp 느낌)
-  var revealTargets = document.querySelectorAll('#contact .scroll-reveal');
+  var revealTargets = document.querySelectorAll('#aboutme .scroll-reveal, #contact .scroll-reveal');
   if(revealTargets.length){
     if('IntersectionObserver' in window){
       var observer = new IntersectionObserver(function(entries){
