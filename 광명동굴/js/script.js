@@ -331,10 +331,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Plain wheel zooms the map again, but only once the cursor has rested
-    // over it for 1.5s — scrolling the page past the map no longer gets
+    // over it for 1s — scrolling the page past the map no longer gets
     // hijacked the instant the cursor crosses it; you have to pause on it
     // first to "arm" zoom, matching the intent without needing Ctrl/Cmd.
-    const ZOOM_ARM_DELAY = 1500;
+    const ZOOM_ARM_DELAY = 1000;
     let zoomArmed = false;
     let armTimer = null;
 
