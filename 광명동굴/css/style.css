@@ -227,7 +227,8 @@ img {
   background: none;
   border: 0;
   color: #fff;
-  font-size: 16px;
+  font-family: "Pretendard", "Nanum Gothic", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  font-size: 14px;
   cursor: pointer;
   white-space: nowrap;
   transition: transform 0.12s ease, opacity 0.15s ease;
@@ -295,7 +296,7 @@ img {
 /* ===== Hero ===== */
 .hero {
   position: relative;
-  min-height: 520px;
+  min-height: 640px;
   display: flex;
   align-items: flex-end;
   color: #fff;
@@ -320,7 +321,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.75));
 }
 
 .hero-content {
@@ -355,10 +356,11 @@ img {
 }
 
 .hero-title-lg {
-  font-family: "Pretendard", "Nanum Gothic", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  font-family: "Nanum Myeongjo", "Nanum Gothic", serif;
   font-size: 44px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.5px;
+  margin-left: -6px;
 }
 
 .hero-desc {
@@ -719,10 +721,15 @@ img {
 
 /* ===== Story banner ===== */
 .story-banner {
-  background: #2a2a2a;
+  background-color: #2a2a2a;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img1.png');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
   color: #fff;
   margin-top: 200px;
-  padding: 64px 24px;
+  padding: 120px 24px;
 }
 
 .story-banner-inner {
@@ -731,24 +738,14 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 56px;
-}
-
-.story-photo {
-  width: 380px;
-  height: 260px;
-  flex-shrink: 0;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
 
 .story-copy {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 24px;
-  text-align: left;
+  text-align: center;
 }
 
 .story-text {
@@ -768,25 +765,27 @@ img {
 }
 
 .btn-more {
-  padding: 12px 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
   border: 0;
-  background: #fff;
-  color: #1a1a1a;
-  border-radius: 9999px;
+  background: none;
+  color: #fff;
   font-family: inherit;
   font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.12s ease;
-}
-
-.btn-more:active {
-  transform: scale(0.94);
+  transition: opacity 0.15s;
 }
 
 .btn-more:hover {
   opacity: 0.85;
+}
+
+.btn-more:hover .arrow {
+  transform: translateX(4px);
 }
 
 /* ===== Tour map ===== */
@@ -1107,7 +1106,6 @@ img {
   }
 
   .hero {
-    min-height: 640px;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
@@ -1136,13 +1134,8 @@ img {
     margin-top: 120px;
   }
 
-  .story-banner-inner {
-    gap: 32px;
-  }
-
-  .story-photo {
-    width: 260px;
-    height: 190px;
+  .story-banner {
+    background-attachment: scroll, scroll;
   }
 
   .map-embed-preview {
@@ -1238,16 +1231,6 @@ img {
   .culture-circle {
     width: 140px;
     height: 140px;
-  }
-
-  .story-banner-inner {
-    flex-direction: column;
-  }
-
-  .story-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
   }
 
 }
