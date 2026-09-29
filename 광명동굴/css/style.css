@@ -298,7 +298,7 @@ img {
   position: relative;
   min-height: 640px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   color: #fff;
   overflow: hidden;
 }
@@ -1103,12 +1103,6 @@ img {
   .header-inner {
     padding: 16px 20px;
     gap: 16px;
-  }
-
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
   }
 
   .hero-content {
