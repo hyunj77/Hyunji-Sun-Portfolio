@@ -1175,6 +1175,15 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .info-col,
+  .cards-col {
+    display: contents;
+  }
+
+  .notice-block {
+    order: 99;
+  }
+
   .feature-cards {
     grid-template-columns: 1fr;
     flex: none;
