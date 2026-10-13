@@ -202,7 +202,19 @@ header>.container>nav>.gnb>li:hover>a,header>.container>nav>.gnb>li>a:focus,head
 #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-overlay>.project-overlay-desc{margin-top:4px; font-size:13px; color:rgba(255,255,255,0.85);}
 #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-bar{height:26px; padding:0 10px; display:flex; align-items:center; gap:6px; background-color:#f2f2ef; border-bottom:1px solid #eee;}
 #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-bar>span{width:8px; height:8px; border-radius:50%; background-color:#ddd;}
-#portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{height:200px; background-color:#ececeb;}
+#portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{height:200px; background-color:#ececeb; background-repeat:no-repeat; background-size:100% auto; background-position:center top; transition:background-position 0.8s ease;}
+/* 카드에 마우스를 올리면 사이트 전체 캡처가 처음부터 끝까지 천천히 내려감, 치우면 다시 맨 위로 */
+@media (hover:hover){
+  #portfolio>.container>.project-grid>.project-card:hover>.project-mockup>.project-mockup-screen{background-position:center bottom; transition:background-position 6s ease-in-out;}
+}
+/* 마우스가 없는 기기(터치)는 저절로 천천히 오르내림 */
+@media (hover:none){
+  #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{animation:projectScroll 12s ease-in-out 1s infinite alternate;}
+}
+@keyframes projectScroll{from{background-position:center top;} to{background-position:center bottom;}}
+@media (prefers-reduced-motion:reduce){
+  #portfolio>.container>.project-grid>.project-card>.project-mockup>.project-mockup-screen{animation:none !important; transition:none !important;}
+}
 #portfolio>.container>.project-grid>.project-card>.project-name{margin-top:16px; font-size:18px; font-weight:700; color:#333333; text-align:center;}
 
 /* design */
