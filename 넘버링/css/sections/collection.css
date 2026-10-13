@@ -43,7 +43,8 @@ main {
   color: var(--color-white);
 }
 
-/* 어두운 배경 박스. 1200px 미만(태블릿·모바일, 시안 없음)은 화면 전체 폭 그대로 */
+/* 어두운 배경 — 모든 화면에서 화면 전체 폭.
+   [사용자 지시] 시안(Rectangle 9)은 왼쪽 끝 ~ x=1360 박스지만, 예전처럼 오른쪽 끝까지 칠하는 것으로 되돌림 (2026-10-13) */
 .collection__dark::before {
   content: "";
   position: absolute;
@@ -53,15 +54,6 @@ main {
   left: 0;
   width: 100%;
   background: var(--color-surface-dark);
-}
-
-/* [사용자 지시] 시안(1920 기준)의 어두운 사각형(Rectangle 9, 1360×1358)은 화면 끝까지 가지 않고 왼쪽 끝에서 x=1360 까지만 칠해지고 오른쪽은 흰 배경.
-   탭·글씨·사진 위치는 그대로(래퍼는 전체 폭). 오른쪽 끝 = 화면 가운데 + (1360 − 960) × 배율 → 오른쪽 사진이 박스 경계에 걸치는 시안 비율이
-   Collection 배율(--collection-scale)과 함께 유지됨 */
-@media (min-width: 1200px) {
-  .collection__dark::before {
-    width: calc(50% + var(--collection-dark-reach) * var(--collection-scale));
-  }
 }
 
 

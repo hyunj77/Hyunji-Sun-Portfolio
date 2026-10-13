@@ -346,7 +346,6 @@
   --collection-subtitle-mt: -2px;         /* 1099 − (935 + 166) */
   --collection-subtitle-h: 41px;
   --collection-gap-to-story: 60px;        /* 1200 − (1099 + 41) */
-  --collection-dark-reach: 400px;         /* 어두운 박스 오른쪽 끝(시안 x=1360)이 화면 가운데(960)에서 오른쪽으로 떨어진 거리 */
   --collection-overlap: 158px;            /* 다크 영역이 스토리 이미지 뒤로 이어지는 길이 (1358 − 1200) */
   --collection-story-ratio: 1352 / 627;
   --collection-desc-mt: 28px;             /* 655 − 627 */
