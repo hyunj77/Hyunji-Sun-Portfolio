@@ -1,0 +1,384 @@
+/* ==========================================================================
+   Section — Collection
+   상단 다크(#2a2a2a) 영역 + 하단 스토리. 다크 영역이 스토리 이미지 뒤로 158px 이어짐.
+
+   [사용자 지시(시안 외 변경)] 1200px 이상에서는 **이미지 크기만** --collection-scale 배율로 줄임.
+   - 배율 = min(--collection-scale-max(0.75), 화면 폭 ÷ 1920). 최댓값은 tokens.css 한 곳에서 조절
+     (1 로 바꾸면 1920 이상에서 시안 크기).
+   - 줄이는 것: 콘텐츠 폭과 왼쪽 시작 위치 → 이미지 3장(폭 기준 grid/aspect-ratio)과 이미지2의 세로 위치(이미지 폭 기준 %).
+   - 줄이지 않는 것: 글자(폰트·크기·자간·줄 높이), CTA, 여백, 탭 간격 등 나머지 모든 값은 시안(1920) 그대로.
+   - 1200px 미만에서는 배율 1 이라 기존 태블릿/모바일 값 그대로.
+   ========================================================================== */
+
+/* 100cqw 는 세로 스크롤바를 뺀 폭(= 레이아웃 폭). 100vw 는 스크롤바를 포함해 배율이 어긋남 */
+main {
+  container-type: inline-size;
+}
+
+.collection {
+  --collection-scale: 1;
+
+  padding-bottom: var(--collection-pb);
+  background: var(--color-white);
+}
+
+@media (min-width: 1200px) {
+  .collection {
+    --collection-scale: min(var(--collection-scale-max), tan(atan2(100cqw, 1920px))); /* min(최댓값, 폭 ÷ 1920) */
+  }
+}
+
+/* 콘텐츠 폭 1352px × 배율, 가운데 정렬 (시안 1920 기준 left 286px = 50% − 674px). --collection-pad 는 1200px 미만에서만 작동 */
+.collection__inner {
+  width: min(calc(var(--collection-w) * var(--collection-scale)), calc(100% - 2 * var(--collection-pad)));
+  margin-left: max(var(--collection-pad), calc(50% - var(--collection-half-offset) * var(--collection-scale)));
+}
+
+/* ---------- Dark area ---------- */
+.collection__dark {
+  position: relative;
+  isolation: isolate; /* 배경 박스(::before)를 글자·사진 뒤에 두려고 */
+  padding-top: var(--collection-dark-pt);
+  padding-bottom: calc(var(--collection-gap-to-story) + var(--collection-overlap));
+  color: var(--color-white);
+}
+
+/* 어두운 배경 박스. 1200px 미만(태블릿·모바일, 시안 없음)은 화면 전체 폭 그대로 */
+.collection__dark::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--color-surface-dark);
+}
+
+/* [사용자 지시] 시안(1920 기준)의 어두운 사각형(Rectangle 9, 1360×1358)은 화면 끝까지 가지 않고 왼쪽 끝에서 x=1360 까지만 칠해지고 오른쪽은 흰 배경.
+   탭·글씨·사진 위치는 그대로(래퍼는 전체 폭). 오른쪽 끝 = 화면 가운데 + (1360 − 960) × 배율 → 오른쪽 사진이 박스 경계에 걸치는 시안 비율이
+   Collection 배율(--collection-scale)과 함께 유지됨 */
+@media (min-width: 1200px) {
+  .collection__dark::before {
+    width: calc(50% + var(--collection-dark-reach) * var(--collection-scale));
+  }
+}
+
+
+/* ---------- Tabs (활성: 흰색 / 비활성: 회색) ---------- */
+.collection__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--collection-tabs-gap);
+  justify-content: center;
+  height: var(--collection-tabs-h);
+}
+
+.collection__tab {
+  font-family: var(--font-inter);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-regular);
+  line-height: normal;
+  letter-spacing: var(--ls-inter-24);
+  white-space: nowrap;
+  color: var(--color-gray-tab);
+}
+
+.collection__tab.is-active {
+  color: var(--color-white);
+}
+
+/* [사용자 지시(시안 외 효과)] Codrops "Menu Hover Effects"(Adsila)의 하이라이트
+   - 선택 안 된 탭에 마우스를 올리면 글자가 흰색으로 바뀌고(0.3초) 글자 뒤 아래쪽 절반에 반투명 흰색(30%) 띠가 왼쪽에서 오른쪽으로 깔림
+     (마우스가 있는 기기 + 키보드 포커스). 마우스를 치우면 왼쪽으로 접힘
+   - 활성 탭은 띠가 **그대로 남아 있음**: 클릭하면 그 탭의 띠가 남고 이전 활성 탭의 띠는 사라짐 */
+.collection__tab {
+  position: relative;
+  isolation: isolate; /* 띠(::before)가 글자 뒤에 오게 */
+  transition: color var(--motion-duration) ease;
+}
+
+.collection__tab::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: calc(-1 * var(--hover-bar-extend));
+  width: calc(100% + 2 * var(--hover-bar-extend));
+  height: var(--hover-bar-height);
+  background: var(--hover-bar-color);
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+  transition: transform var(--hover-bar-duration) var(--hover-bar-ease);
+  pointer-events: none;
+}
+
+.collection__tab.is-active::before {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) {
+  .collection__tab:not(.is-active):hover {
+    color: var(--color-white);
+  }
+
+  .collection__tab:not(.is-active):hover::before {
+    transform: scaleX(1);
+  }
+}
+
+.collection__tab:not(.is-active):focus-visible {
+  color: var(--color-white);
+}
+
+.collection__tab:not(.is-active):focus-visible::before {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection__tab,
+  .collection__tab::before {
+    transition: none;
+  }
+}
+
+/* ---------- Gallery ---------- */
+.collection__gallery {
+  display: grid;
+  grid-template-columns: var(--collection-cols);
+  margin-top: var(--collection-main-mt);
+}
+
+.collection__main {
+  grid-column: 1;
+  aspect-ratio: var(--collection-main-ratio);
+}
+
+.collection__main img,
+.collection__sub img,
+.collection__story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection__heading {
+  grid-column: 1;
+  margin-top: var(--collection-heading-mt);
+}
+
+.collection__title {
+  font-family: var(--font-koho);
+  font-size: var(--fs-128);
+  font-weight: var(--fw-regular);
+  line-height: var(--collection-title-lh);
+  letter-spacing: var(--ls-heart);
+  white-space: nowrap;
+  color: var(--color-white);
+}
+
+.collection__subtitle {
+  height: var(--collection-subtitle-h);
+  margin-top: var(--collection-subtitle-mt);
+  font-family: var(--font-laila);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-regular);
+  line-height: normal;
+  color: var(--color-white);
+}
+
+.collection__sub {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: start;
+  margin-top: var(--collection-sub-offset); /* 이미지2 폭 기준 % 라서 이미지와 같이 줄어듦 */
+  aspect-ratio: var(--collection-sub-ratio);
+}
+
+/* ---------- Story ---------- */
+.collection__story {
+  position: relative;
+  margin-top: calc(-1 * var(--collection-overlap));
+}
+
+.collection__story-image {
+  aspect-ratio: var(--collection-story-ratio);
+}
+
+.collection__desc {
+  max-width: var(--collection-desc-w);
+  min-height: var(--collection-desc-h);
+  margin-top: var(--collection-desc-mt);
+  font-family: var(--font-42dot);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-regular);
+  line-height: normal;
+  word-break: keep-all;
+  color: var(--color-black);
+}
+
+/* CTA — 크기·글자·선·화살표는 BEST 의 `VIEW TOP20` 과 같은 `.cta--best` 를 그대로 씀 (사용자 지시) */
+.collection__story .cta {
+  margin-top: var(--collection-cta-mt);
+}
+
+/* ==========================================================================
+   Tablet (768~1199px, 시안 75:66) / Mobile (767px 이하, 시안 74:61) — 값은 tokens.css 의 --col-*
+   - 어두운 영역(#292929): 위 50/48 → 탭(높이 44) → 44/36 → 사진 묶음(740/470) → 스토리 사진 뒤로 172/124 이어짐
+   - 사진 묶음: 이미지1 왼쪽, 이미지2 오른쪽(바깥 테두리 6/4px 어두운 색), "Heart" 와 부제는 이미지 위에 겹침(시안 순서 그대로)
+     시안 폭(768/390)보다 넓으면 이미지1은 왼쪽, 이미지2는 오른쪽 여백에 붙어 사이가 벌어짐
+   - 스토리: 사진(높이 340/200) → 글(416 폭, 16/28 / 15/26) + 버튼. 태블릿은 글과 버튼이 가로(버튼 아래 맞춤), 모바일은 세로
+   - 탭: 시안 위치 그대로(768 에서 왼쪽 216, 390 에서 42 — 화면 가운데 기준으로 계산), 선택 안 된 탭 #919194.
+     시안에는 선택된 탭 뒤 하이라이트 띠가 없어 태블릿·모바일에서는 띠를 표시하지 않음(마우스를 올렸을 때만)
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .collection {
+    padding-bottom: 0;
+  }
+
+  .collection__inner {
+    width: auto;
+    margin-left: 0;
+  }
+
+  .collection__dark {
+    padding-top: var(--col-pt);
+    padding-bottom: var(--col-backdrop-h);
+  }
+
+  .collection__dark::before {
+    background: var(--c-dark);
+  }
+
+  .collection__tabs {
+    flex-wrap: nowrap;
+    gap: var(--col-tabs-gap);
+    align-items: center;
+    justify-content: flex-start;
+    height: var(--col-tabs-h);
+    padding-left: max(0px, calc(50% - var(--col-tabs-shift)));
+  }
+
+  .collection__tab {
+    font-size: var(--col-tabs-fs);
+    line-height: var(--lh-inter);
+    letter-spacing: var(--ls-inter-sub);
+    color: var(--c-gray);
+  }
+
+  .collection__tab.is-active::before {
+    transform: scaleX(0);
+  }
+
+  .collection__gallery {
+    position: relative;
+    display: block;
+    height: var(--col-collage-h);
+    margin-top: var(--col-collage-gap);
+  }
+
+  .collection__main,
+  .collection__sub,
+  .collection__heading {
+    position: absolute;
+    margin: 0;
+  }
+
+  /* 시안처럼 사진을 칸보다 --zoom 배 넓게 두고 가운데를 보여줌 (칸 밖은 잘라냄) */
+  .collection__main,
+  .collection__sub,
+  .collection__story-image {
+    overflow: clip;
+  }
+
+  .collection__main { --zoom: var(--col-main-zoom); }
+  .collection__sub { --zoom: var(--col-sub-zoom); }
+  .collection__story-image { --zoom: var(--col-story-zoom); }
+
+  .collection__main img,
+  .collection__sub img,
+  .collection__story-image img {
+    width: calc(100% * var(--zoom));
+    max-width: none;
+    margin-left: calc(50% * (1 - var(--zoom)));
+  }
+
+  .collection__main {
+    top: 0;
+    left: var(--page-gutter);
+    width: var(--col-main-w);
+    height: var(--col-main-h);
+    aspect-ratio: auto;
+  }
+
+  .collection__sub {
+    top: var(--col-sub-top);
+    right: var(--page-gutter);
+    width: var(--col-sub-w);
+    height: var(--col-sub-h);
+    aspect-ratio: auto;
+    box-shadow: 0 0 0 var(--col-sub-stroke) var(--c-dark);
+  }
+
+  /* 시안: 글자가 이미지2 위에 겹침 */
+  .collection__heading {
+    top: var(--col-title-top);
+    left: var(--page-gutter);
+    z-index: 1;
+  }
+
+  .collection__title {
+    font-size: var(--col-title-fs);
+    line-height: normal;
+    letter-spacing: 0.2em;
+  }
+
+  .collection__subtitle {
+    position: absolute;
+    top: calc(var(--col-subtitle-top) - var(--col-title-top));
+    left: 0;
+    width: var(--col-subtitle-w);
+    height: auto;
+    margin: 0;
+    font-size: var(--col-subtitle-fs);
+    line-height: var(--col-subtitle-lh);
+  }
+
+  .collection__story {
+    display: grid;
+    grid-template-columns: minmax(0, var(--col-desc-w)) auto;
+    column-gap: var(--col-story-gap);
+    justify-content: space-between;
+    margin-top: calc(var(--col-story-top) - var(--col-backdrop-h));
+    padding: 0 var(--page-gutter) var(--col-story-pb);
+  }
+
+  .collection__story-image {
+    grid-column: 1 / -1;
+    height: var(--col-story-h);
+    aspect-ratio: auto;
+  }
+
+  .collection__desc {
+    max-width: none;
+    min-height: 0;
+    margin-top: var(--col-story-pt);
+    font-size: var(--col-desc-fs);
+    line-height: var(--col-desc-lh);
+  }
+
+  .collection__story .cta {
+    align-self: end;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .collection__story {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .collection__story .cta {
+    margin-top: var(--col-story-gap);
+  }
+}

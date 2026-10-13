@@ -1,0 +1,387 @@
+/* ==========================================================================
+   Section — Stores
+   3열(매장 이미지 1022 / 정보 514 / 다음 이미지 348, 간격 18) — 1920에서 정확히 일치
+   ========================================================================== */
+
+.stores {
+  position: relative;
+  padding-top: var(--stores-pt);
+  padding-bottom: var(--stores-pb);
+  background: var(--color-white);
+  overflow-x: clip; /* 넘길 때 글씨가 옆에서 밀려 들어오는 동안 화면 밖으로 나가 가로 스크롤이 생기지 않게 */
+}
+
+/* 다크 배경: 상단 5px은 흰색 */
+.stores::before {
+  content: '';
+  position: absolute;
+  inset: var(--stores-top-gap) 0 0;
+  background: var(--color-surface-dark);
+}
+
+.stores__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--stores-cols);
+  gap: var(--stores-row-gap) var(--stores-col-gap);
+  align-items: start;
+}
+
+/* ---------- 매장 이미지 카드 ---------- */
+.store-card {
+  position: relative;
+  padding-bottom: var(--stores-card-pb);
+}
+
+.store-card__image {
+  width: var(--stores-image-w);
+  aspect-ratio: var(--stores-image-ratio);
+  overflow: clip; /* 넘길 때 사진이 옆에서 밀려 들어와도 칸 밖으로 나가지 않게 (js/stores.js) */
+}
+
+.store-card__image img,
+.store-next img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 세로 라벨 ---------- */
+.store-card__indicator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: var(--stores-indicator-w);
+  min-height: var(--stores-indicator-h); /* 내용이 길면(HANNAM FLAGSHIP) 자라도록 — 시안 299px은 최소값 */
+  padding: var(--stores-indicator-pt) var(--stores-indicator-pr) var(--stores-indicator-pt) var(--stores-indicator-pl);
+  overflow: clip;
+  background: var(--color-white-99);
+  color: var(--color-gray-text);
+}
+
+/* 세로쓰기 + 180° = 시안의 −90° 회전 (아래에서 위로 읽힘) */
+.store-card__name,
+.store-card__number {
+  flex-shrink: 0;
+  font-family: var(--font-inter);
+  line-height: normal;
+  text-align: center;
+  white-space: pre;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.store-card__name {
+  width: var(--stores-indicator-name-w);
+  min-height: var(--stores-indicator-name-h);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-extralight);
+  letter-spacing: var(--ls-inter-24-thin);
+  text-transform: uppercase;
+}
+
+.store-card__number {
+  width: var(--stores-indicator-num-w);
+  min-height: var(--stores-indicator-num-h);
+  margin-bottom: calc(-1 * var(--stores-num-shift-y));
+  font-size: var(--fs-36);
+  font-weight: var(--fw-bold);
+}
+
+.store-card__number .is-thin {
+  font-weight: var(--fw-extralight);
+}
+
+.store-card__number .is-tight {
+  letter-spacing: calc(var(--ls-store-num) + var(--ls-store-num-fix));
+}
+
+/* ---------- 정보 영역 ---------- */
+.store-info {
+  height: var(--stores-info-h);
+  padding-top: var(--stores-info-pt);
+  color: var(--color-white-99);
+}
+
+.store-info__heading {
+  max-width: 302px;
+  --section-title-color: var(--color-white-99);
+}
+
+.store-info__address {
+  height: var(--stores-address-h);
+  max-width: 366px;
+  margin-top: var(--stores-address-mt);
+  font-family: var(--font-montserrat);
+  font-style: normal;
+}
+
+.store-info__name {
+  position: relative;
+  top: var(--stores-name-shift-y);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-extrabold);
+  line-height: var(--stores-address-name-lh);
+}
+
+.store-info__name + .store-info__line {
+  margin-top: var(--stores-address-gap-name);
+}
+
+.store-info__line {
+  margin-top: var(--stores-address-gap);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  line-height: var(--stores-address-line-lh);
+}
+
+.store-info .cta {
+  margin-top: var(--stores-cta-mt);
+  --cta-color: var(--color-white-99);
+}
+
+.store-info__pager {
+  display: flex;
+  gap: var(--stores-pager-gap);
+  justify-content: flex-end;
+  padding-right: var(--stores-pager-pr);
+  margin-top: var(--stores-pager-mt);
+}
+
+/* ---------- 다음 매장 이미지 ---------- */
+.store-next {
+  aspect-ratio: var(--stores-next-ratio);
+  overflow: clip;
+}
+
+/* ==========================================================================
+   Tablet (768~1199px, 시안 75:96) / Mobile (767px 이하, 시안 74:91) — 값은 tokens.css 의 --st-*
+   - 바탕 전체 #292929, 위·아래 80 / 56, 좌우 32 / 20
+   - 태블릿: 제목 → 44 → [사진 400×480 | 매장 정보(이름·주소 / 버튼 / 맨 아래 원형 버튼)]
+   - 모바일: 제목 → 사진(높이 320) → 원형 버튼 → 매장 정보 → 버튼 (사이 28, 정보 → 버튼 20)
+   - 사진 아래쪽 그라데이션 위에 "01 ." + 매장 이름(가로). 데스크톱의 세로 라벨·다음 매장 미리보기는 시안에 없어 쓰지 않음
+   - [사용자 지시] 시안의 "01 / 02" 표시는 넣지 않음. 원형 버튼은 오른쪽 끝
+   - 매장 정보 묶음(.store-info)은 display: contents 로 풀어서 제목·주소·버튼·원형 버튼을 각각 시안 위치에 둠 (데스크톱 마크업 그대로)
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .stores {
+    padding: var(--st-py) var(--page-gutter);
+  }
+
+  .stores::before {
+    inset: 0;
+    background: var(--c-dark);
+  }
+
+  .stores__row {
+    grid-template-columns: var(--st-image-w) minmax(0, 1fr);
+    grid-template-rows: auto auto auto 1fr;
+    gap: 0 var(--st-col-gap);
+  }
+
+  .store-info {
+    display: contents;
+  }
+
+  .store-info__heading {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: none;
+    margin-bottom: var(--st-head-gap);
+  }
+
+  .store-card {
+    grid-column: 1;
+    grid-row: 2 / span 3;
+    height: var(--st-image-h);
+    padding-bottom: 0;
+  }
+
+  /* 사진을 옆으로 밀어 매장 넘기기 (js/stores.js) — 세로 스크롤은 그대로 */
+  .store-card__image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  .store-card__image::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: var(--st-shade-h);
+    background: linear-gradient(rgb(0 0 0 / 0), rgb(0 0 0 / 0.75));
+    pointer-events: none;
+  }
+
+  /* "01 ." 위, 매장 이름 아래 (마크업 순서의 반대라 column-reverse) */
+  .store-card__indicator {
+    right: auto;
+    bottom: var(--st-label-inset);
+    left: var(--st-label-inset);
+    z-index: 1;
+    flex-direction: column-reverse;
+    gap: 2px;
+    align-items: flex-start;
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+    background: none;
+  }
+
+  .store-card__name,
+  .store-card__number {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    line-height: var(--lh-inter);
+    text-align: left;
+    white-space: normal;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .store-card__number {
+    font-size: var(--st-index-fs);
+    color: var(--c-gray);
+  }
+
+  .store-card__number .is-thin {
+    font-weight: var(--fw-bold);
+  }
+
+  .store-card__number .is-tight {
+    letter-spacing: 0;
+  }
+
+  .store-card__name {
+    font-size: var(--st-label-fs);
+    letter-spacing: 0.15em;
+    color: var(--color-white);
+  }
+
+  .store-info__address {
+    grid-column: 2;
+    grid-row: 2;
+    height: auto;
+    max-width: none;
+    margin-top: 0;
+  }
+
+  .store-info__name {
+    top: 0;
+    font-size: var(--st-name-fs);
+    line-height: var(--st-name-lh);
+  }
+
+  .store-info__line,
+  .store-info__name + .store-info__line {
+    margin-top: 0;
+    font-size: var(--st-line-fs);
+    line-height: var(--st-line-lh);
+  }
+
+  .store-info__name + .store-info__line {
+    margin-top: var(--st-info-gap);
+  }
+
+  .store-info .cta {
+    grid-column: 2;
+    grid-row: 3;
+    width: 100%;
+    margin-top: var(--st-info-gap);
+  }
+
+  .store-info__pager {
+    grid-column: 2;
+    grid-row: 4;
+    align-self: end;
+    justify-content: flex-end;
+    margin-top: 0;
+    padding-right: 0;
+  }
+
+  /* 원형 버튼: 지름 52 / 48, 테두리 2px #727272, 화살표 22 / 20 칸 (시안 벡터를 그린 pager-arrow-*.svg) */
+  .store-info__pager .round-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--st-pager-size);
+    height: var(--st-pager-size);
+    border: 2px solid var(--c-pager);
+    border-radius: 50%;
+  }
+
+  .store-info__pager .round-btn__circle,
+  .store-info__pager .round-btn__arrow img {
+    display: none;
+  }
+
+  .store-info__pager .round-btn__arrow {
+    position: static;
+    width: var(--st-pager-arrow);
+    height: var(--st-pager-arrow);
+    background: url("../../assets/icons/pager-arrow-left.svg") center / contain no-repeat;
+    transform: none;
+  }
+
+  .store-info__pager .round-btn--next .round-btn__arrow {
+    background-image: url("../../assets/icons/pager-arrow-right.svg");
+  }
+
+  .store-next {
+    display: none;
+  }
+}
+
+/* 태블릿: 주소·영업시간을 시안처럼 두 줄로 */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .store-info__seg {
+    display: block;
+  }
+
+  .store-info__sep {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .stores__row {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    row-gap: var(--st-gap);
+  }
+
+  .store-info__heading {
+    margin-bottom: 0;
+  }
+
+  .store-card {
+    grid-row: 2;
+  }
+
+  .store-info__pager {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .store-info__address {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .store-info .cta {
+    grid-column: 1;
+    grid-row: 5;
+    margin-top: calc(var(--st-info-gap) - var(--st-gap)); /* 정보 → 버튼은 20 (다른 사이는 28) */
+  }
+}

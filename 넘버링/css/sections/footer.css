@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Section — Footer
+   검정 배경. 위 영역(메뉴 / 회사 정보 + CUSTOMER CARE) + 브랜드(NUMBERING / 저작권).
+   NUMBERING 은 컨테이너 폭에 비례해 크기가 변함 (1760px 폭에서 264.9px = 시안)
+   ========================================================================== */
+
+.footer {
+  padding-top: var(--footer-pt);
+  padding-bottom: var(--footer-pb);
+  background: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-montserrat);
+  overflow-wrap: anywhere;
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-gap);
+  width: min(var(--footer-w), calc(100% - 2 * var(--footer-pad)));
+  margin-inline: auto;
+}
+
+.footer__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* ---------- 메뉴 ---------- */
+.footer__menu {
+  display: flex;
+  flex: 1 0 0%;
+  flex-direction: column;
+  gap: var(--footer-menu-gap);
+  min-width: var(--footer-menu-min-w);
+  max-width: var(--footer-menu-max-w);
+}
+
+.footer__more {
+  height: var(--footer-more-h);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-regular);
+  line-height: var(--footer-more-lh);
+  color: var(--color-gray-footer);
+}
+
+.footer__list {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  line-height: var(--footer-menu-lh);
+}
+
+/* ---------- 회사 정보 ---------- */
+.footer__company {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--footer-info-gap);
+  width: var(--footer-info-w);
+}
+
+.footer__info {
+  font-size: var(--fs-13);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  line-height: var(--footer-info-lh);
+}
+
+.footer__info-group + .footer__info-group {
+  margin-top: var(--footer-info-lh);
+}
+
+.footer__care {
+  display: block;
+  width: var(--footer-care-w);
+  height: var(--footer-care-h);
+  padding: var(--footer-care-y) var(--footer-care-x) 0;
+  background: var(--color-white);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-regular);
+  line-height: var(--footer-care-lh);
+  color: var(--color-black);
+}
+
+.footer__care-label {
+  display: block;
+  height: var(--footer-care-text-h);
+}
+
+/* ---------- 브랜드 ---------- */
+.footer__brand {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-brand-gap);
+}
+
+.footer__logo {
+  height: var(--footer-brand-h);
+  font-size: calc(100cqw * var(--footer-brand-fs-ratio));
+  font-weight: var(--fw-extrabold);
+  line-height: var(--footer-brand-lh);
+}
+
+.footer__legal {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  line-height: var(--footer-legal-lh);
+  white-space: pre-wrap; /* 시안 문구 앞의 공백 5칸을 그대로 둠 */
+}
+
+/* 태블릿·모바일용 회사 정보(줄 나눔이 다름)는 데스크톱에서 숨김 */
+.footer__info--compact {
+  display: none;
+}
+
+/* ==========================================================================
+   Tablet (768~1199px, 시안 75:146) / Mobile (767px 이하, 시안 74:138) — 값은 tokens.css 의 --ft-*
+   - 위 72 / 56, 아래 48 / 56, 좌우 32 / 20. 위 영역 → 브랜드 64 / 40
+   - 태블릿: [메뉴 300 (More + 링크 8개, 한 줄 44) | 회사 정보 270 + CUSTOMER CARE 200×48]
+   - 모바일: 메뉴 없음(시안). 회사 정보 → 40 → CUSTOMER CARE (폭 100%, 높이 48)
+   - NUMBERING: 폭에 비례 (768 에서 104px, 390 에서 52px), 저작권 12 / 11px
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .footer {
+    padding-top: var(--ft-pt);
+    padding-bottom: var(--ft-pb);
+  }
+
+  .footer__inner {
+    gap: var(--ft-gap);
+    width: auto;
+    margin-inline: var(--page-gutter);
+  }
+
+  .footer__menu {
+    flex: none;
+    gap: 0;
+    width: var(--ft-menu-w);
+    min-width: 0;
+    max-width: none;
+  }
+
+  .footer__more {
+    height: auto;
+    margin-bottom: var(--space-8);
+    line-height: normal;
+  }
+
+  .footer__list {
+    font-size: var(--fs-15);
+    line-height: normal;
+  }
+
+  .footer__list a {
+    display: flex;
+    align-items: center;
+    height: var(--ft-row-h);
+  }
+
+  .footer__company {
+    gap: var(--ft-company-gap);
+    width: var(--ft-company-w);
+  }
+
+  .footer__info {
+    display: none;
+  }
+
+  .footer__info--compact {
+    display: block;
+  }
+
+  .footer__info--compact p + p {
+    margin-top: var(--footer-info-lh); /* 빈 줄 하나 */
+  }
+
+  .footer__care {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ft-care-w);
+    height: var(--ft-care-h);
+    padding: 0;
+    line-height: normal;
+  }
+
+  .footer__care-label {
+    height: auto;
+  }
+
+  .footer__brand {
+    gap: var(--ft-brand-gap);
+  }
+
+  .footer__logo {
+    height: auto;
+    font-size: calc(100cqw * var(--ft-brand-ratio));
+    line-height: var(--ft-brand-lh);
+  }
+
+  /* 시안 문구: "© NUMBERING  Terms & Conditions  Our privacy policy" (앞 공백 없음, 사이 두 칸) */
+  .footer__legal {
+    font-size: var(--ft-legal-fs);
+    line-height: normal;
+    white-space: normal;
+  }
+
+  .footer__legal a {
+    margin-left: 0.25em;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer__menu {
+    display: none;
+  }
+
+  .footer__company {
+    width: 100%;
+  }
+}

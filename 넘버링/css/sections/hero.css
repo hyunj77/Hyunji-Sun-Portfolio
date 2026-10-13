@@ -1,0 +1,492 @@
+/* ==========================================================================
+   Section — Header + Hero
+   ========================================================================== */
+
+/* ---------- Header (Hero 위 오버레이, 74px) ----------
+   [사용자 지시(시안 외 효과)] 화면 위에 고정(fixed). 스크롤 10px 이상이면 is-scrolled (js/header.js)
+   → 배경 검정 80% + 높이 74px → 56px (--header-h-scrolled). 맨 위(스크롤 0)의 값은 시안 그대로.
+   줄어든 상태에서는 로고/아이콘 박스를 헤더 정중앙에, GNB 글자는 --header-gnb-ink-shift 만큼 내려 글자 중심을 맞춤.
+   높이와 자식의 top 을 같은 시간·같은 easing 으로 전환해 중간 프레임에서도 어긋나지 않음 */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: var(--header-h);
+  color: var(--color-white);
+  transition:
+    background-color var(--motion-duration) ease,
+    height var(--motion-duration) ease;
+}
+
+.site-header.is-scrolled {
+  height: var(--header-h-scrolled);
+  background: var(--header-bg-scrolled);
+}
+
+.site-header__logo,
+.gnb,
+.utils {
+  transition: top var(--motion-duration) ease;
+}
+
+.site-header.is-scrolled .site-header__logo {
+  top: calc(50% - var(--header-logo-h) / 2);
+}
+
+.site-header.is-scrolled .utils {
+  top: calc(50% - var(--header-icon-size) / 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header__logo,
+  .gnb,
+  .utils {
+    transition: none;
+  }
+}
+
+/* 맨 위의 top 은 시안 값(--header-logo-y 등)이 그대로 나오지만 calc(50% + …) 형태로 씀 (헤더 높이 74px 에서 계산값 동일).
+   이렇게 하면 높이가 줄어드는 전환 중에도 요소가 헤더 중심을 따라가서 중간 프레임에서 처지지 않음 */
+.site-header__logo {
+  position: absolute;
+  top: calc(50% + var(--header-logo-y) - var(--header-h) / 2);
+  left: var(--header-logo-x);
+  width: var(--header-logo-w);
+  height: var(--header-logo-h);
+}
+
+.site-header__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- GNB (가운데 정렬: 1920 기준 left 750) ---------- */
+.gnb {
+  position: absolute;
+  top: calc(50% + var(--header-gnb-y) - var(--header-h) / 2);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* [사용자 지시(시안 외 효과)] Codrops "Menu Hover Effects"(Adsila)의 하이라이트: 마우스를 올리면 글자 뒤 아래쪽 절반에
+   반투명 흰색(30%) 띠가 왼쪽에서 오른쪽으로 깔림. 마우스를 치우면 왼쪽으로 접힘. 글자 색·크기·위치는 그대로.
+   띠는 글자 폭 + 양옆 0.35em(.gnb__text, ::before 라 레이아웃에 영향 없음), 마우스가 있는 기기(hover: hover)와 키보드 포커스에서만 */
+.gnb__text {
+  position: relative;
+  isolation: isolate; /* 띠(::before)가 글자 뒤에 오게 */
+}
+
+.gnb__text::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: calc(-1 * var(--hover-bar-extend));
+  width: calc(100% + 2 * var(--hover-bar-extend));
+  height: var(--hover-bar-height);
+  background: var(--hover-bar-color);
+  transform: scaleX(0);
+  transform-origin: 0% 50%;
+  transition: transform var(--hover-bar-duration) var(--hover-bar-ease);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .gnb__link:hover .gnb__text::before {
+    transform: scaleX(1);
+  }
+}
+
+.gnb__link:focus-visible .gnb__text::before {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gnb__text::before {
+    transition: none;
+  }
+}
+
+/* 줄어든 헤더: GNB 글자 잉크 중심이 헤더 중심에 오도록 박스를 --header-gnb-ink-shift 만큼 내림 (1024px 이상. 그 미만은 .gnb 가 오른쪽에서 나오는 드로어) */
+@media (min-width: 1024px) {
+  .site-header.is-scrolled .gnb {
+    top: calc(50% - var(--header-gnb-h) / 2 + var(--header-gnb-ink-shift));
+  }
+}
+
+.gnb__list {
+  display: flex;
+  gap: var(--header-gnb-gap);
+}
+
+.gnb__link {
+  display: block;
+  width: var(--gnb-w, auto);
+  height: var(--header-gnb-h);
+  /* [사용자 지시] GNB 글자 크기를 LANGUAGE 와 같게(14px). 시안은 16px 였음 */
+  font-size: var(--fs-14);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-inter-14);
+  padding-top: var(--header-gnb-text-shift); /* 14px 로 줄어 글자가 박스 위쪽에 붙으므로 LANGUAGE 와 같은 높이로 내림 */
+}
+
+/* ---------- Utilities (LANGUAGE + 아이콘 4) ---------- */
+.utils {
+  position: absolute;
+  top: calc(50% + var(--header-util-y) - var(--header-h) / 2);
+  right: var(--header-util-right);
+  display: flex;
+  gap: var(--header-util-gap);
+  height: var(--header-icon-size);
+}
+
+.utils__lang {
+  display: block;
+  width: var(--header-lang-w);
+  color: inherit;
+  cursor: pointer;
+  padding-top: calc(1px + var(--inter-shift-y)); /* Figma pt 1px + Pretendard 보정 */
+  font-size: var(--fs-14);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-inter-14);
+  text-align: left;
+}
+
+.utils__icons {
+  display: flex;
+  gap: var(--header-icon-gap);
+}
+
+.utils__icon {
+  display: block;
+  width: var(--header-icon-size);
+  height: var(--header-icon-size);
+}
+
+.utils__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 햄버거 버튼은 모바일(767px 이하)에서만 보임. 태블릿 시안(75:12)에는 햄버거가 없고 메뉴 6개가 상단에 보임 (사용자 확인) */
+@media (min-width: 768px) {
+  .utils__icon[data-menu-toggle] {
+    display: none;
+  }
+}
+
+/* 태블릿 메뉴·슬라이드 표시 막대는 데스크톱에서 숨김 */
+.tnav,
+.hero__dots {
+  display: none;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* 사용자 지시(시안 외): 창 높이에 맞춰 이벤트 바가 항상 창 바닥에 오게 함. 앞의 100vh 는 svh 미지원 브라우저용 */
+  height: 100vh;
+  height: 100svh;
+  min-height: var(--hero-min-h);
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+/* 배경 사진 2장 — 각각 폭의 50%. 칸 높이를 고정(minmax(0,1fr))해 낮은 창에서도 사진이 넘치지 않게 함 */
+.hero__bg {
+  position: absolute;
+  inset: var(--hero-bg-inset);
+  display: grid;
+  /* 기본 50 : 50. 마우스가 오른쪽 절반에 있으면(.is-right-hover, js/hero.js) 40 : 60 으로 부드럽게 바뀜 */
+  grid-template-columns: calc((100 - var(--hero-split-right, 50)) * 1%) calc(var(--hero-split-right, 50) * 1%);
+  transition: grid-template-columns var(--hero-split-duration) var(--hero-split-ease);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+  opacity: var(--hero-bg-opacity);
+  pointer-events: none;
+}
+
+/* 사진을 담는 칸: 칸 밖으로 나가는 부분은 잘라냄 */
+.hero__bg-col {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.hero__bg.is-right-hover {
+  --hero-split-right: var(--hero-split-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg {
+    transition: none;
+  }
+}
+
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 세로는 위 기준, 가로는 바깥쪽(왼쪽 사진의 왼쪽 / 오른쪽 사진의 오른쪽)부터 잘림 */
+.hero__bg-img--left {
+  object-position: right top;
+}
+
+.hero__bg-img--right {
+  object-position: left top;
+}
+
+.hero .marquee {
+  position: relative;
+}
+
+/* ==========================================================================
+   Header — 태블릿 (768~1199px, 시안 75:17) / 모바일 (767px 이하, 시안 74:17)
+   - 태블릿: 높이 84, 좌우 32. 로고(140×23) | 메뉴 6개(15px, 간격 22) | 검색·장바구니 (44 칸, 아이콘 24)
+   - 모바일: 높이 72, 좌우 20. 햄버거(왼쪽) | 로고 124×20.4 (가운데) | 검색·장바구니
+   - 데스크톱 GNB·LANGUAGE·마이페이지는 숨김. 스크롤하면 배경(검정 80%)은 그대로 생기지만 높이는 줄지 않음
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--page-gutter);
+  }
+
+  .site-header,
+  .site-header.is-scrolled {
+    height: var(--hdr-h);
+  }
+
+  .site-header__logo {
+    position: static;
+    flex: none;
+    width: var(--hdr-logo-w);
+    height: var(--hdr-logo-h);
+  }
+
+  .gnb,
+  .utils__item--lang,
+  .utils__item--hover {
+    display: none;
+  }
+
+  .utils {
+    position: static;
+    height: auto;
+  }
+
+  .utils__icons {
+    gap: 0;
+  }
+
+  .utils__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--hdr-btn);
+    height: var(--hdr-btn);
+  }
+
+  .utils__icon img {
+    width: var(--hdr-icon);
+    height: var(--hdr-icon);
+  }
+
+  .tnav {
+    display: block;
+  }
+
+  .tnav__list {
+    display: flex;
+    gap: var(--tnav-gap);
+  }
+
+  .tnav__link {
+    display: flex;
+    align-items: center;
+    height: var(--hdr-btn);
+    font-size: var(--tnav-fs);
+    font-weight: var(--fw-regular);
+    line-height: normal;
+    letter-spacing: var(--ls-inter-sub);
+  }
+
+  /* 마우스가 있는 기기에서는 데스크톱 GNB 와 같은 하이라이트(Adsila 띠) */
+  .tnav__text {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .tnav__text::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: calc(-1 * var(--hover-bar-extend));
+    width: calc(100% + 2 * var(--hover-bar-extend));
+    height: var(--hover-bar-height);
+    background: var(--hover-bar-color);
+    transform: scaleX(0);
+    transform-origin: 0% 50%;
+    transition: transform var(--hover-bar-duration) var(--hover-bar-ease);
+    pointer-events: none;
+  }
+
+  .tnav__link:focus-visible .tnav__text::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 1199px) and (hover: hover) {
+  .tnav__link:hover .tnav__text::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .tnav {
+    display: none;
+  }
+
+  .site-header {
+    justify-content: flex-end;
+  }
+
+  /* 로고는 헤더 정가운데(가로·세로), 햄버거는 왼쪽 끝 (시안: 로고 x=133, 햄버거 x=20).
+     스크롤 후(.is-scrolled)에도 데스크톱용 top 계산(--header-logo-h 기준)이 덮어쓰지 않게 같이 지정 */
+  .site-header__logo,
+  .site-header.is-scrolled .site-header__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+
+  [data-menu-toggle] {
+    position: absolute;
+    top: 50%;
+    left: var(--page-gutter);
+    translate: 0 -50%;
+  }
+}
+
+/* ==========================================================================
+   Hero — 태블릿·모바일 (1199px 이하)
+   - [사용자 지시] 높이는 기기 화면 높이에 꽉 차게(위 .hero 의 100svh 그대로). 사진 2장(예전 합성 사진의 왼쪽/오른쪽)을 한 장씩 꽉 차게 보여주고
+     손가락으로 옆으로 넘김(스크롤 스냅) + 1.5초마다 자동 넘김(js/hero.js). 모바일은 슬라이드 표시 막대(시안 74:27)
+   - 시안 값: 바탕 검정 + 사진 불투명도 50%, 위쪽 그라데이션(검정 60% → 0, 높이 180 / 모바일 160)
+   - 이벤트 띠는 데스크톱과 같이 계속 흐름(사용자 지시). 간격 20 / 모바일 14, 한글 문구는 시안대로 42dot Sans
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .hero {
+    background: var(--color-black);
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: var(--hdr-shade-h);
+    background: linear-gradient(rgb(0 0 0 / 0.6), rgb(0 0 0 / 0));
+    pointer-events: none;
+  }
+
+  .hero__bg {
+    inset: 0;
+  }
+
+  .hero .marquee {
+    z-index: 2;
+  }
+
+  .marquee__item--inter {
+    letter-spacing: 0;
+  }
+
+  .marquee__item--inria,
+  .marquee__item--inter-kr {
+    font-family: var(--font-42dot);
+  }
+}
+
+@media (max-width: 767px) {
+  /* 시안 모바일 첫 화면은 모델 얼굴 사진(합성 사진의 오른쪽) → 오른쪽 사진을 먼저 */
+  .hero__bg-col--right {
+    order: -1;
+  }
+
+  .hero__dots {
+    position: absolute;
+    bottom: calc(var(--marquee-py) * 2 + var(--marquee-lh) + var(--hero-dot-bottom));
+    left: var(--page-gutter);
+    z-index: 2;
+    display: flex;
+    gap: var(--hero-dot-gap);
+  }
+
+  .hero__dot {
+    width: var(--hero-dot-w);
+    height: var(--hero-dot-h);
+    background: var(--color-white);
+    opacity: 0.5;
+    transition:
+      width var(--motion-duration) ease,
+      opacity var(--motion-duration) ease;
+  }
+
+  .hero__dot.is-active {
+    width: var(--hero-dot-w-active);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .hero__dot {
+    transition: none;
+  }
+}
+
+/* 사진 한 장씩 꽉 차게 + 손가락으로 옆으로 넘김(스크롤 스냅). 웹(1200px 이상)은 그대로 */
+@media (max-width: 1199px) {
+  .hero__bg {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain; /* 끝에서 더 밀어도 뒤로 가기·새로고침 제스처로 넘어가지 않게 */
+    scrollbar-width: none;
+    pointer-events: auto; /* 터치로 넘길 수 있게 (데스크톱에서는 장식이라 none) */
+    transition: none;
+  }
+
+  .hero__bg::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero__bg-col {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always; /* 세게 밀어도 한 장씩만 넘어감 */
+  }
+
+  /* 한 장씩 보이므로 반반 구도(왼쪽/오른쪽 끝 기준)가 아니라 가운데 기준으로 보여줌 */
+  .hero__bg-img--left,
+  .hero__bg-img--right {
+    object-position: center top;
+  }
+}

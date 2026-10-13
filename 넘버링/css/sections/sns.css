@@ -1,0 +1,326 @@
+/* ==========================================================================
+   Section — SNS
+   소개 영역(제목/선/설명/아이콘) + 이미지 3장 갤러리. 갤러리는 1155×472 비율을 유지하며
+   이미지·원형 버튼 위치를 % 로 지정 (1920에서 시안 좌표와 일치)
+   ========================================================================== */
+
+.sns {
+  padding-top: var(--sns-pt);
+  padding-bottom: var(--sns-pb);
+  background: var(--color-white);
+}
+
+/* 콘텐츠 폭 1453px (1920 기준 left 220px). 좁아지면 좌우 --sns-pad 확보 */
+.sns__inner {
+  display: grid;
+  grid-template-columns: var(--sns-cols);
+  width: min(var(--sns-w), calc(100% - 2 * var(--sns-pad)));
+  margin-left: max(var(--sns-pad), calc(50% - var(--sns-half-offset)));
+}
+
+/* ---------- 소개 영역 ---------- */
+.sns__intro {
+  position: relative;
+  height: var(--sns-intro-h);
+}
+
+.sns__title {
+  white-space: nowrap;
+}
+
+.sns__line {
+  position: absolute;
+  top: var(--sns-line-y);
+  left: var(--sns-line-x);
+}
+
+.sns__desc {
+  position: absolute;
+  top: var(--sns-desc-y);
+  left: var(--sns-desc-x);
+  width: var(--sns-desc-w);
+  font-family: var(--font-koho);
+  font-size: var(--fs-15);
+  font-weight: var(--fw-regular);
+  line-height: var(--sns-desc-lh);
+  color: var(--color-gray-text);
+}
+
+.sns__icons {
+  position: absolute;
+  top: var(--sns-icons-y);
+  left: var(--sns-icons-x);
+  display: flex;
+  gap: var(--sns-icons-gap);
+}
+
+.sns__icon {
+  display: block;
+  width: var(--sns-icon-size);
+  height: var(--sns-icon-size);
+}
+
+.sns__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 갤러리 ---------- */
+.sns__gallery {
+  position: relative;
+  margin-top: var(--sns-gallery-mt);
+  aspect-ratio: var(--sns-gallery-ratio);
+}
+
+/* 슬라이드 영역 — 갤러리 밖으로 나가는 이미지를 잘라냄. 버튼은 이 영역 밖(위)에 둠 */
+.sns__viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate; /* 가운데 이미지(z-index)가 원형 버튼 위로 올라오지 않게 */
+  touch-action: pan-y;
+}
+
+.sns__photo {
+  position: absolute;
+  z-index: 1;
+  transition:
+    left var(--sns-slide-duration) ease,
+    top var(--sns-slide-duration) ease,
+    width var(--sns-slide-duration) ease,
+    height var(--sns-slide-duration) ease;
+}
+
+.sns__photo.is-instant {
+  transition: none;
+}
+
+.sns__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+/* 칸(slot) 위치 — 0 왼쪽(363) / 1 가운데(472, 위에 겹침) / 2 오른쪽(363)
+   -1, 3 은 화면 밖 대기 위치 (이동 중에만 사용) */
+.sns__photo[data-slot="-1"],
+.sns__photo[data-slot="0"],
+.sns__photo[data-slot="2"],
+.sns__photo[data-slot="3"] {
+  top: var(--sns-side-top);
+  width: var(--sns-side-w);
+  height: var(--sns-side-h);
+}
+
+.sns__photo[data-slot="-1"] {
+  left: calc(-1 * var(--sns-side-w));
+}
+
+.sns__photo[data-slot="0"] {
+  left: 0;
+}
+
+.sns__photo[data-slot="2"] {
+  left: var(--sns-side-right-left);
+}
+
+.sns__photo[data-slot="3"] {
+  left: 100%;
+}
+
+.sns__photo[data-slot="1"] {
+  z-index: 2;
+  top: 0;
+  left: var(--sns-big-left);
+  width: var(--sns-big-w);
+  height: 100%;
+}
+
+/* 원형 화살표 버튼 (이미지 경계에 걸쳐 놓임) */
+.sns__gallery .round-btn {
+  position: absolute;
+  top: var(--sns-btn-top);
+  left: var(--sns-btn-left);
+}
+
+.sns__gallery .round-btn--next {
+  left: var(--sns-btn-right-left);
+}
+
+/* 태블릿·모바일 사진 묶음은 데스크톱에서 숨김 */
+.sns__grid {
+  display: none;
+}
+
+/* ==========================================================================
+   Tablet (768~1199px, 시안 75:125) / Mobile (767px 이하, 시안 74:118) — 값은 tokens.css 의 --sns-*
+   - 제목 → 글 → 아이콘 → 사진 (사이 28)
+   - 태블릿: [사용자 지시] 데스크톱과 같은 3칸 슬라이더(원형 버튼 + 스와이프). 모바일: [사용자 지시] 사진 1장씩 스와이프 + 진행 막대 (js/sns.js)
+   - 아이콘은 44 칸 안에 30 (사이 4). 제목 아래 굵은 선은 시안에 없어 숨김
+   ========================================================================== */
+@media (max-width: 1199px) {
+  .sns {
+    padding: var(--sns-py) var(--page-gutter);
+  }
+
+  .sns__inner {
+    grid-template-columns: var(--sns-text-w) minmax(0, 1fr);
+    gap: var(--sns-stack-gap) var(--sns-col-gap);
+    align-items: start;
+    width: auto;
+    margin-left: 0;
+  }
+
+  .sns__intro,
+  .sns__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sns-stack-gap);
+  }
+
+  .sns__intro {
+    height: auto;
+  }
+
+  .sns__line {
+    display: none;
+  }
+
+  .sns__desc {
+    position: static;
+    width: auto;
+    font-family: var(--font-42dot);
+    font-size: var(--sns-desc-fs);
+    line-height: var(--sns-desc-lh);
+    word-break: keep-all;
+    color: var(--c-gray);
+  }
+
+  .sns__icons {
+    position: static;
+    gap: var(--sns-icon-gap);
+  }
+
+  .sns__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sns-icon-box);
+    height: var(--sns-icon-box);
+  }
+
+  .sns__icon img {
+    width: var(--sns-icon-size);
+    height: var(--sns-icon-size);
+  }
+
+  .sns__gallery {
+    margin-top: 0;
+  }
+}
+
+/* 태블릿(768~1199px): [사용자 지시] 웹사이트처럼 사진 3장(가운데 큼)을 넘기며 봄 — 데스크톱의 3칸 슬라이더·원형 버튼 그대로 + 스와이프(js/sns.js).
+   [사용자 지시] 슬라이더는 원래 사진 자리(글 칸 오른쪽)에, 그 칸 폭에 맞춰 줄여서 둠. 진행 막대는 웹처럼 없음 */
+@media (min-width: 768px) and (max-width: 1199px) {
+  /* [사용자 지시] 글과 슬라이더를 서로 세로 가운데에 맞춤 (화면 폭에 따라 슬라이더 높이가 바뀌어도 항상 가운데)
+     [사용자 지시] 글은 왼쪽, 슬라이더는 오른쪽에 붙어 있던 것을 화면 가운데로 모음: 글 칸 = 글 폭, 슬라이더 = 안쪽 폭의 60%, 둘을 가운데 정렬 */
+  .sns__inner {
+    grid-template-columns: max-content var(--sns-tab-gallery-w);
+    column-gap: var(--sns-tab-col-gap);
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* 버튼 위에서 시작한 가로 스와이프도 브라우저가 가져가지 않게(세로 스크롤은 그대로) */
+  .sns__gallery {
+    touch-action: pan-y;
+  }
+
+  .sns__progress {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .sns__gallery {
+    aspect-ratio: auto;
+  }
+
+  .sns__viewport,
+  .sns__gallery .round-btn {
+    display: none;
+  }
+
+  /* [사용자 지시] 스와이프로 사진 넘기기: 한 장씩 옆으로 밀리고 놓으면 딱 멈춤(스크롤 스냅).
+     12장 = 12페이지. 마우스로 끌어도 같음(js/drag-scroll.js) */
+  .sns__grid {
+    display: flex;
+    gap: var(--sns-grid-gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain; /* 끝에서 더 밀어도 뒤로 가기 제스처로 넘어가지 않게 */
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .sns__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sns__page {
+    display: grid;
+    flex: 0 0 100%;
+    grid-template-columns: minmax(0, 1fr); /* [사용자 지시] 한 페이지 = 사진 1장 (정사각형, 폭 가득) */
+    scroll-snap-align: start;
+    scroll-snap-stop: always; /* 세게 밀어도 한 페이지씩 */
+  }
+
+  .sns__cell {
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+
+  .sns__cell--big {
+    grid-column: 1 / -1;
+  }
+
+  .sns__cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* SNS 진행 막대: 사진 묶음 폭 그대로 (BEST 막대 모양 재사용 — css/sections/best.css 의 .best__progress) */
+@media (max-width: 1199px) {
+  .sns__progress {
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .sns__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 1919px 이하(웹 일부·태블릿·모바일): [사용자 지시] 화살표를 중앙 이미지 기준 양옆(사진 경계선)의 시안과 같은 위치에 두고, 원 크기는 반응형으로 조절.
+   - 위치: 원 **중심**을 시안과 같은 갤러리 비율(왼쪽 29.9% / 오른쪽 70.7% / 세로 47.8%)에 둠 → 왼쪽 위 모서리 = 중심 − 버튼 크기 ÷ 2
+   - 크기: 시안 72px × (갤러리 폭 ÷ 시안 갤러리 폭 1155px), 최소 --sns-btn-scale-min, 최대 1. 가운데 기준으로 줄이므로 중심은 그대로
+   - 갤러리를 컨테이너(inline-size)로 만들어 갤러리 폭(cqw)을 직접 씀. 1920px 이상은 시안 그대로(이 규칙 없음) */
+@media (max-width: 1919px) {
+  .sns__gallery {
+    container-type: inline-size;
+  }
+
+  .sns__gallery .round-btn {
+    top: calc(var(--sns-btn-cy) - var(--round-btn-size) / 2);
+    left: calc(var(--sns-btn-cx-left) - var(--round-btn-size) / 2);
+    transform: scale(clamp(var(--sns-btn-scale-min), tan(atan2(100cqw, 1155px)), 1));
+  }
+
+  .sns__gallery .round-btn--next {
+    left: calc(var(--sns-btn-cx-right) - var(--round-btn-size) / 2);
+  }
+}
